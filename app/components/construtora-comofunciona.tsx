@@ -1,6 +1,6 @@
 import { TrendingUp, Scale, ShieldCheck, ArrowUpRight } from "lucide-react";
 
-const WHATSAPP_URL = "https://wa.me/5548999999999";
+import { WHATSAPP_URL } from "../lib/whatsapp";
 
 const items = [
   {
