@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AssetGuard — Apresentação</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f3; color: #1a1a1a; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+  .wrap { width: 100%; max-width: 720px; }
+  .nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+  .nav-btn { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 7px 16px; font-size: 13px; cursor: pointer; color: #1a1a1a; }
+  .nav-btn:hover { background: #f0f0ee; }
+  .nav-btn:disabled { opacity: .3; cursor: default; }
+  .nav-center { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .counter { font-size: 13px; color: #888; }
+  .dots { display: flex; gap: 7px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #ddd; border: none; cursor: pointer; padding: 0; }
+  .dot.on { background: #1a1a1a; }
+  .slide { background: white; border: 1px solid #e8e8e6; border-radius: 14px; padding: 2.5rem 2.5rem 2rem; min-height: 380px; display: flex; flex-direction: column; gap: .9rem; }
+  .label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: .08em; }
+  h2 { font-size: 21px; font-weight: 500; color: #1a1a1a; line-height: 1.35; }
+  .body { font-size: 15px; color: #555; line-height: 1.75; flex: 1; }
+  .body p { margin-bottom: .7rem; }
+  .body p:last-child { margin-bottom: 0; }
+  .hl { color: #1a1a1a; font-weight: 500; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-top: .75rem; }
+  .stat { background: #f5f5f3; border-radius: 8px; padding: .75rem 1rem; }
+  .stat-val { font-size: 20px; font-weight: 500; color: #1a1a1a; }
+  .stat-lbl { font-size: 12px; color: #888; margin-top: 2px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: .75rem; }
+  td { padding: 9px 0; border-bottom: 1px solid #f0f0ee; color: #555; vertical-align: top; }
+  td:last-child { text-align: right; color: #1a1a1a; font-weight: 500; padding-left: 12px; }
+  tr:last-child td { border-bottom: none; }
+  .member { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f0f0ee; }
+  .member:last-child { border-bottom: none; }
+  .avatar { width: 40px; height: 40px; border-radius: 50%; background: #f0f0ee; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: #888; flex-shrink: 0; }
+  .m-name { font-size: 14px; font-weight: 500; color: #1a1a1a; }
+  .m-role { font-size: 13px; color: #777; margin-top: 3px; line-height: 1.55; }
+  .fonte { font-size: 11px; color: #bbb; margin-top: 1rem; border-top: 1px solid #f0f0ee; padding-top: .75rem; line-height: 1.6; }
+  .fonte a { color: #bbb; text-decoration: none; }
+  .fonte a:hover { color: #888; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav">
+    <button class="nav-btn" id="pp" onclick="go(-1)" disabled>← anterior</button>
+    <div class="nav-center">
+      <span class="counter" id="ct">1 / 10</span>
+      <div class="dots" id="dt"></div>
+    </div>
+    <button class="nav-btn" id="np" onclick="go(1)">próximo →</button>
+  </div>
+  <div id="sc"></div>
+</div>
+
+<script>
+const S = [
+  {
+    l: "01 — problema",
+    t: "Construtoras têm 5 anos de responsabilidade legal sobre o que entregam e nenhum dado sobre o que acontece depois.",
+    b: `<p>Quando uma falha aparece, seja um vazamento ou um problema elétrico, a construtora já está no prejuízo antes de qualquer orçamento. O custo de uma ocorrência descoberta tarde soma o conserto, o dano causado e o desgaste com quem comprou.</p>
+    <p>Existe um lado comercial nisso também. Empreendimentos com automação vendem até <span class="hl">15% acima do preço</span> e quem adota manutenção preditiva reduz custo operacional em até <span class="hl">40%</span>. Construtoras que oferecem isso têm argumento concreto na hora de vender uma unidade.</p>
+    <p>Edifícios comerciais desperdiçam em média <span class="hl">30% da energia consumida</span> por falta de monitoramento adequado. No residencial de alto padrão, o cenário é semelhante e o impacto na conta do condomínio é direto.</p>
+    <div class="stats">
+      <div class="stat"><div class="stat-val">15%</div><div class="stat-lbl">acima na venda com automação</div></div>
+      <div class="stat"><div class="stat-val">40%</div><div class="stat-lbl">redução em custo operacional</div></div>
+      <div class="stat"><div class="stat-val">5 anos</div><div class="stat-lbl">de responsabilidade legal</div></div>
+    </div>
+    <div class="fonte">Fonte: <a href="https://www.revistaprediointeligente.com.br/automacao/edificios-inteligentes-em-2026-da-operacao-reativa-ao-desempenho-preditivo/" target="_blank">Revista Prédio Inteligente, mar/2026</a></div>`
+  },
+  {
+    l: "02 — contexto",
+    t: "A gestão predial ainda é predominantemente reativa no Brasil, mas isso está mudando rápido.",
+    b: `<p>Durante muitos anos, problemas em edifícios eram identificados depois que ocorriam. Em 2026, a combinação de IoT, inteligência artificial e análise de dados em tempo real está tornando possível antecipar falhas antes que elas apareçam. Essa mudança está chegando ao mercado residencial de alto padrão.</p>
+    <p>Na faixa de Bombinhas, Porto Belo e Itapema, construção civil é a principal atividade econômica. A demanda por diferenciação está crescendo, mas o que existe hoje no mercado local são soluções básicas: nível de água, controle de portaria. Nenhuma empresa regional entrega monitoramento de infraestrutura de forma integrada.</p>
+    <p>Um dos sócios trabalha em uma empresa que precisou contratar uma fornecedora de Florianópolis para ter algo parecido, e mesmo assim incompleto. A lacuna existe, é conhecida por quem está no setor, e ninguém regional a preencheu ainda.</p>
+    <div class="fonte">Fonte: <a href="https://www.revistaprediointeligente.com.br/automacao/edificios-inteligentes-em-2026-da-operacao-reativa-ao-desempenho-preditivo/" target="_blank">Revista Prédio Inteligente, mar/2026</a></div>`
+  },
+  {
+    l: "03 — solução",
+    t: "O AssetGuard monitora a infraestrutura de um edifício de forma contínua, gerando dados que a construtora nunca teve acesso antes.",
+    b: `<p>Válvulas inteligentes nas entradas de água, sensores elétricos nas áreas comuns e controle de acesso integrado. Tudo conectado a um dashboard acessado pela construtora e pelo morador em tempo real pelo celular.</p>
+    <p>Com inteligência artificial, o sistema identifica padrões no consumo de água e energia e gera alertas antes que uma anomalia vire problema visível. Isso permite reduzir o tempo de indisponibilidade dos sistemas, evitar intervenções emergenciais e aumentar a vida útil dos equipamentos.</p>
+    <p>O custo de instalação fica entre <span class="hl">R$1.000 e R$1.200 por unidade</span>. Para a construtora, isso reduz o risco nos anos de garantia e serve como diferencial de venda. Para o morador, acesso ao monitoramento do próprio apartamento sem custo adicional.</p>
+    <div class="fonte">Fonte: <a href="https://www.revistaprediointeligente.com.br/automacao/edificios-inteligentes-em-2026-da-operacao-reativa-ao-desempenho-preditivo/" target="_blank">Revista Prédio Inteligente, mar/2026</a></div>`
+  },
+  {
+    l: "04 — como funciona",
+    t: "O processo começa na planta do empreendimento e termina com monitoramento ativo todos os meses.",
+    b: `<p><span class="hl">Análise do projeto.</span> Recebemos a planta e mapeamos os pontos de instalação. Por padrão instalamos válvulas nas entradas de água, da rua para o prédio e do prédio para a caixa d'água. Dependendo do escopo do empreendimento, outros pontos são incluídos.</p>
+    <p><span class="hl">Orçamento.</span> Proposta com custo de instalação e mensalidade ajustados ao tamanho do projeto. Após aprovação, montamos os dispositivos e fazemos a instalação.</p>
+    <p><span class="hl">Recorrência.</span> Monitoramento contínuo com mensalidade fixa. Como os dispositivos ficam instalados na obra, não há motivo para troca e o contrato tende a ser permanente.</p>`
+  },
+  {
+    l: "05 — mercado",
+    t: "Porto Belo e Itapema estão entre os maiores mercados imobiliários do Brasil em volume de vendas.",
+    b: `<p>Os dados consolidados de 2025 pela DWV colocaram a Costa Esmeralda no centro do mercado imobiliário nacional. Itapema ficou em <span class="hl">1º lugar com R$4,1 bilhões em VGV</span>. Porto Belo ficou em <span class="hl">2º lugar com R$3,8 bilhões</span>, à frente de Balneário Camboriú (R$2,4 bi) e Itajaí (R$2,2 bi). Para uma cidade com 30 mil habitantes, esse volume é extraordinário.</p>
+    <p>O m² médio em Porto Belo chegou a R$13.900 em 2025, alta de 3,7% sobre o ano anterior. Imóveis comprados em 2022 foram revendidos em 2025 com valorização de 86% em três anos.</p>
+    <p>Globalmente, o número de edifícios inteligentes deve chegar a <span class="hl">486 milhões até 2030</span>, segundo a Juniper Research. O modelo BMSaaS, que substitui sistemas físicos por plataformas em nuvem com crescimento médio anual de 20%, é exatamente o caminho que o AssetGuard está construindo.</p>
+    <div class="stats">
+      <div class="stat"><div class="stat-val">R$4,1bi</div><div class="stat-lbl">VGV Itapema 2025 — 1º Brasil</div></div>
+      <div class="stat"><div class="stat-val">R$3,8bi</div><div class="stat-lbl">VGV Porto Belo 2025 — 2º Brasil</div></div>
+      <div class="stat"><div class="stat-val">486M</div><div class="stat-lbl">edifícios inteligentes no mundo até 2030</div></div>
+    </div>
+    <div class="fonte">Fontes: <a href="https://www.grupocostaleste.com.br/blog/porto-belo-maior-valorizacao-imobiliaria-brasil" target="_blank">Grupo Costa Leste / DWV, abr/2026</a> · <a href="https://proximonivel.claro.com.br/edificios-inteligentes-devem-chegar-a-486-milhoes-no-mundo-ate-2030/" target="_blank">Juniper Research via Próximo Nível, out/2025</a></div>`
+  },
+  {
+    l: "06 — receita",
+    t: "A receita entra pelo projeto de instalação e cresce com a recorrência mensal a cada novo empreendimento.",
+    b: `<table>
+      <tr><td>Projeto de implantação por empreendimento</td><td>~R$25.000</td></tr>
+      <tr><td>Mensalidade de monitoramento</td><td>R$2.500 a R$4.000</td></tr>
+      <tr><td>Churn estimado</td><td>próximo de zero</td></tr>
+      <tr><td>Manutenção preditiva (fase seguinte)</td><td>upsell com CAC zero</td></tr>
+    </table>
+    <p style="margin-top:1rem">Com 10 empreendimentos ativos a recorrência chega a <span class="hl">R$25.000 a R$40.000 por mês</span>, fora os projetos novos. A manutenção entra como serviço adicional quando o caixa permitir estruturar a operação de campo, e o custo de aquisição desse cliente já é zero porque já está na base.</p>`
+  },
+  {
+    l: "07 — time",
+    t: "Três sócios com perfis que cobrem integralmente o que esse negócio precisa para funcionar.",
+    b: `<div class="member"><div class="avatar">GS</div><div><div class="m-name">Gestão e Comercial</div><div class="m-role">30 anos em logística de multinacionais, passando por Renault, Fiat e outras montadoras. Gerenciou projetos de grande escala e tem relacionamento direto com o mercado de construção civil da região. Cuida da abertura comercial e da operação.</div></div></div>
+    <div class="member"><div class="avatar">SW</div><div><div class="m-name">Software e Dados</div><div class="m-role">22 anos. Responsável pelo sistema de processamento de dados, dashboard e integração com IA. Protótipos funcionando e domínio completo do stack do sistema.</div></div></div>
+    <div class="member"><div class="avatar">EL</div><div><div class="m-name">Eletrônica e Hardware</div><div class="m-role">22 anos. Desenvolve os sensores e dispositivos IoT usados na instalação. Cuida da montagem dos equipamentos e da execução no campo.</div></div></div>`
+  },
+  {
+    l: "08 — status",
+    t: "Protótipos desenvolvidos, mercado mapeado e primeiro contrato em negociação.",
+    b: `<p>Nos últimos meses desenvolvemos os primeiros protótipos dos dispositivos, estudamos os componentes disponíveis no mercado e ajustamos o escopo com base no que construtoras de médio e alto padrão de SC precisam.</p>
+    <p>As soluções existentes são caras, voltadas para edifícios corporativos de grande porte e inacessíveis para o segmento que queremos atender. Esse espaço está aberto e nenhuma empresa regional o preencheu.</p>
+    <p>O primeiro projeto está em negociação com o investidor, que assume o papel de cliente inicial. Além de gerar a primeira receita, esse projeto vira referência concreta para abrir os contratos seguintes.</p>`
+  },
+  {
+    l: "09 — plano",
+    t: "Nos próximos 12 meses, fechar contratos, instalar bem e construir reputação na região.",
+    b: `<table>
+      <tr><td>Mês 1 a 2</td><td>Fechar e iniciar o primeiro projeto</td></tr>
+      <tr><td>Mês 3</td><td>Primeiro empreendimento ativo, 2 contratos em negociação</td></tr>
+      <tr><td>Mês 6</td><td>3 a 5 empreendimentos com recorrência ativa</td></tr>
+      <tr><td>Mês 12</td><td>8 a 10 empreendimentos, R$24k a R$30k/mês de recorrência</td></tr>
+    </table>
+    <p style="margin-top:1rem">O foco comercial é a região de Bombinhas, Porto Belo, Itapema e Balneário. Toda construtora num raio de 30km deve conhecer o AssetGuard até o final do ano. O reinvestimento do primeiro ano vai inteiramente para marketing e distribuição.</p>`
+  },
+  {
+    l: "10 — investimento",
+    t: "R$200.000 para cobrir os primeiros 6 meses de operação.",
+    b: `<table>
+      <tr><td>Pró-labore dos 3 sócios por 6 meses</td><td>R$72.000</td></tr>
+      <tr><td>Hardware e componentes para os primeiros projetos</td><td>R$60.000</td></tr>
+      <tr><td>Equipamentos de instalação</td><td>R$30.000</td></tr>
+      <tr><td>Infraestrutura de software e cloud</td><td>R$20.000</td></tr>
+      <tr><td>Marketing e distribuição regional</td><td>R$18.000</td></tr>
+      <tr><td>Total</td><td>R$200.000</td></tr>
+    </table>
+    <p style="margin-top:1rem">O pró-labore cobre o básico para que os três sócios dediquem o tempo inteiro à empresa durante a fase inicial. Sem isso, qualquer necessidade financeira pessoal vira um risco para o ritmo do projeto.</p>`
+  }
+];
+
+let c = 0;
+
+function render() {
+  const s = S[c];
+  document.getElementById('sc').innerHTML = `<div class="slide"><div class="label">${s.l}</div><h2>${s.t}</h2><div class="body">${s.b}</div></div>`;
+  document.getElementById('ct').textContent = `${c+1} / ${S.length}`;
+  document.getElementById('pp').disabled = c === 0;
+  document.getElementById('np').disabled = c === S.length - 1;
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('on', i === c));
+}
+
+function go(d) { c = Math.max(0, Math.min(S.length - 1, c + d)); render(); }
+
+const de = document.getElementById('dt');
+S.forEach((_, i) => {
+  const d = document.createElement('button');
+  d.className = 'dot' + (i === 0 ? ' on' : '');
+  d.setAttribute('aria-label', `Slide ${i+1}`);
+  d.onclick = () => { c = i; render(); };
+  de.appendChild(d);
+});
+
+render();
+</script>
+</body>
+</html>

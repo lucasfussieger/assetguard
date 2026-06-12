@@ -1,26 +1,121 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --gold: #a83500;
+  --gold-light: #f5c103;
+  --gold-dark: #ffc400;
+  --blue: #1E3A8A;
+  --blue-light: #3B82F6;
+  --blue-dark: #0F1F4A;
+  --surface: #1a2439;
+  --muted: #f5c103;
+  --text: #f5c103;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-dark: var(--gold-dark);
+  --color-blue: var(--blue);
+  --color-blue-light: var(--blue-light);
+  --color-blue-dark: var(--blue-dark);
+  --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-foreground: var(--text);
+  --font-sans: var(--font-poppins);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  font-family: var(--font-poppins), sans-serif;
 }
+
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #c25e00, #ff8400);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-gold-dark {
+  background: linear-gradient(135deg, #7a3800, #ff8400);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-assetguard {
+  background: linear-gradient(135deg, #b34d00, #ff8400);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-18px); }
+}
+
+@keyframes shimmer-pass {
+  0%    { transform: translateX(-100%); opacity: 1; }
+  17%   { transform: translateX(200%);  opacity: 1; }
+  17.1% { transform: translateX(200%);  opacity: 0; }
+  99.9% { transform: translateX(-100%); opacity: 0; }
+  100%  { transform: translateX(-100%); opacity: 1; }
+}
+
+/* Luz que passa por dentro das letras */
+.text-shimmer-gold {
+  background: linear-gradient(
+    100deg,
+    var(--gold) 0%,
+    var(--gold) 42%,
+    #ffe2b3 50%,
+    var(--gold) 58%,
+    var(--gold) 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: text-shine 6s ease-in-out infinite;
+}
+
+@keyframes text-shine {
+  0%   { background-position: 150% 0; }
+  100% { background-position: -150% 0; }
+}
+
+@keyframes carousel {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-320px * 5 - 24px * 5)); }
+}
+
+.animate-carousel {
+  animation: carousel 45s linear infinite;
+}
+
+.animate-carousel:hover {
+  animation-play-state: paused;
+}
+
+@keyframes slide-bg {
+  0% { left: -100%; }
+  100% { left: 0; }
+}
+
+/* Flash dourado alternado nos ícones (ciclo de 15s, 5s por ícone) */
+@keyframes icon-flash {
+  0%   { opacity: 0; }
+  4%   { opacity: 1; }
+  20%  { opacity: 1; }
+  33%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.animate-icon-flash {
+  animation: icon-flash 15s ease-in-out infinite;
+}
+

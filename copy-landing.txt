@@ -1,0 +1,126 @@
+ASSETGUARD — COPY DA LANDING PAGE
+(Ordem: Header → Hero → Problema → Solução Hero → Solução Section → Como Funciona)
+
+================================================================================
+1. HEADER
+================================================================================
+
+Logo: AssetGuard
+
+Nav:
+- Como funciona
+- Benefícios
+- Preços
+- Contato
+
+CTA: Falar com especialista
+
+================================================================================
+2. HERO SECTION
+================================================================================
+
+Headline:
+Faça seu imóvel render.
+sem dor de cabeça.
+
+Subtítulo:
+Sistema inteligente que detecta vazamentos, consumo anormal e acessos suspeitos.
+Monitoramento + equipe local para garantir a integridade do imóvel.
+
+CTAs:
+- Quero ser cliente →
+- o que é AssetGuard ?
+
+================================================================================
+3. PROBLEM SECTION
+================================================================================
+
+Tag: principais problemas que proprietários encontram
+
+Cards:
+
+[1] Você não sabe quem entra no seu imóvel
+Cópias de chave andam soltas. Qualquer pessoa entra e sai sem deixar rastro.
+Quando algo ruim acontece, roubo, dano ou acesso que não deveria, você só fica
+sabendo depois que o estrago já foi feito.
+
+[2] Manutenção reativa custa até 3× mais
+Um vazamento que passa despercebido destrói forro, paredes e piso. Uma infiltração
+acaba comprometendo toda a estrutura. Sem alguém de olho, você só vê quando já
+custou caro e ainda precisa parar a renda para consertar.
+
+[3] Dependência total de terceiros sem transparência
+Síndicos, imobiliárias, prestadores de serviço. Todos dão retorno quando acham
+conveniente e do jeito que querem. Você não acessa as informações direto, não tem
+histórico em um lugar só e fica dependendo do que contam para você.
+
+[4] Emergências na estadia viram cancelamento e reputação perdida
+Ar-condicionado quebrado, chuveiro sem água, fechadura emperrada às 23h. Sem
+alguém para resolver na hora, o hóspede cancela, deixa uma avaliação horrível e
+você perde as próximas reservas. Uma nota ruim destrói meses de ocupação.
+
+Rodapé:
+Esses problemas não são inevitáveis. Existe uma solução →
+
+================================================================================
+4. SOLUTION HERO
+================================================================================
+
+Título:
+Tecnologia e operação
+cuidando do seu imóvel por você.
+
+Parágrafo:
+Você não está lá. E essa distância custa caro. Quem entrou ontem? Tem vazamento?
+Vistoria está em dia para receber hóspedes? Sem poder estar presente você fica
+refém de terceiros e suscetível a surpresas ruins. A AssetGuard resolve isso,
+visibilidade e controle total do seu imóvel, de onde você estiver.
+
+================================================================================
+5. SOLUTION SECTION (cards animados)
+================================================================================
+
+[1] Dispositivos IoT instalados no imóvel
+Sensores de umidade, temperatura, fumaça e vazamento monitoram o imóvel 24 horas
+por dia. Os dados chegam em tempo real para você e para nossa equipe — antes que
+qualquer problema evolua.
+
+[2] Fechadura eletrônica e controle de acesso
+Controle quem entra e sai do seu imóvel de qualquer lugar. Gere acessos temporários,
+bloqueie remotamente e consulte o histórico completo de entradas — sem chaves físicas,
+sem risco de cópia.
+
+[3] Vistorias periódicas e sob demanda
+Nossa equipe realiza vistorias presenciais com relatório fotográfico completo — antes
+e depois de cada locação, de forma periódica ou quando você solicitar. Tudo
+documentado e acessível no app.
+
+[4] Manutenção preditiva
+Com base nos dados dos sensores e no histórico do imóvel, identificamos o que está
+prestes a falhar antes que falhe. Agendamos reparos preventivos, evitando emergências
+e reduzindo drasticamente o custo de manutenção.
+
+[5] Alertas em tempo real pelo aplicativo
+Qualquer anomalia detectada — movimento fora do horário, sensor disparado, tentativa
+de acesso não autorizado — gera uma notificação imediata no seu celular. Você decide
+a ação. Nós executamos se precisar.
+
+================================================================================
+6. COMO FUNCIONA
+================================================================================
+
+Título: Como funciona o serviço da AssetGuard?
+
+[Passo 1] Instalação inteligente
+Equipamos o imóvel com sensores IoT e controle de acesso — sem obra, sem complicação.
+Nossa equipe cuida de tudo.
+
+[Passo 2] Monitoramento contínuo
+Você acompanha tudo em tempo real pelo app. Sensores, acessos e alertas — tudo no
+seu celular, 24h por dia.
+
+[Passo 3] Ação quando necessário
+Detectamos qualquer anomalia e atuamos com manutenção, vistoria ou suporte — antes
+que vire problema.
+
+================================================================================
