@@ -29,14 +29,14 @@ export default function LeadForm() {
 
   if (submitted) {
     return (
-      <div className="bg-surface rounded-3xl p-10 border border-gold/30 text-center">
-        <div className="w-16 h-16 bg-gold/10 border-2 border-gold rounded-full flex items-center justify-center mx-auto mb-6">
+      <div className="rounded-3xl card-soft p-10 text-center">
+        <div className="w-16 h-16 bg-brand-5/10 border-2 border-brand-4 rounded-full flex items-center justify-center mx-auto mb-6">
           <svg
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             strokeWidth="2.5"
-            className="w-8 h-8 text-gold"
+            className="w-8 h-8 text-brand-4"
           >
             <path
               strokeLinecap="round"
@@ -45,38 +45,38 @@ export default function LeadForm() {
             />
           </svg>
         </div>
-        <h3 className="text-2xl font-bold text-foreground mb-3">
-          Recebemos seu contato!
+        <h3 className="text-2xl font-semibold text-ink mb-3">
+          Contato recebido
         </h3>
-        <p className="text-muted leading-relaxed">
-          Nossa equipe entrará em contato em breve para apresentar a solução
-          completa para o seu imóvel.
+        <p className="text-ink-soft leading-relaxed">
+          Nossa equipe entrará em contato para apresentar a plataforma e
+          avaliar as necessidades do seu condomínio.
         </p>
       </div>
     );
   }
 
   const inputClass =
-    "w-full bg-background border border-white/10 rounded-xl px-4 py-3 text-foreground placeholder:text-muted focus:outline-none focus:border-gold/50 focus:ring-1 focus:ring-gold/30 transition-colors";
+    "w-full bg-white border border-line rounded-xl px-4 py-3 text-ink placeholder:text-ink-faint focus:outline-none focus:border-brand-4/60 focus:ring-2 focus:ring-brand-5/25 transition-colors";
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-surface rounded-3xl p-8 border border-gold/20 space-y-5"
+      className="rounded-3xl card-soft p-8 space-y-5"
     >
       <div>
-        <h3 className="text-2xl font-bold text-foreground">
-          Quero proteger meu imóvel
+        <h3 className="text-2xl font-semibold text-ink">
+          Quero conhecer a Viz
         </h3>
-        <p className="text-muted text-sm mt-1">
-          Preencha o formulário e entraremos em contato.
+        <p className="text-ink-soft text-sm mt-1">
+          Preencha os dados abaixo e entraremos em contato.
         </p>
       </div>
 
       <div>
         <label
           htmlFor="nome"
-          className="block text-sm font-medium text-foreground mb-2"
+          className="block text-sm font-medium text-ink mb-2"
         >
           Nome completo *
         </label>
@@ -95,7 +95,7 @@ export default function LeadForm() {
       <div>
         <label
           htmlFor="telefone"
-          className="block text-sm font-medium text-foreground mb-2"
+          className="block text-sm font-medium text-ink mb-2"
         >
           Telefone (WhatsApp) *
         </label>
@@ -114,7 +114,7 @@ export default function LeadForm() {
       <div>
         <label
           htmlFor="email"
-          className="block text-sm font-medium text-foreground mb-2"
+          className="block text-sm font-medium text-ink mb-2"
         >
           E-mail *
         </label>
@@ -133,9 +133,9 @@ export default function LeadForm() {
       <div>
         <label
           htmlFor="cidade"
-          className="block text-sm font-medium text-foreground mb-2"
+          className="block text-sm font-medium text-ink mb-2"
         >
-          Cidade do imóvel
+          Cidade do condomínio
         </label>
         <input
           id="cidade"
@@ -150,13 +150,13 @@ export default function LeadForm() {
 
       <button
         type="submit"
-        className="w-full bg-gold text-background py-4 rounded-xl font-bold text-lg hover:bg-gold-light transition-all hover:scale-[1.02] shadow-lg shadow-gold/20"
+        className="w-full bg-gradient-to-r from-brand-1 to-brand-2 text-white py-4 rounded-xl font-semibold text-lg hover:brightness-110 transition-all shadow-lg shadow-brand-1/25"
       >
-        Quero proteger meu imóvel
+        Quero conhecer a Viz
       </button>
 
-      <p className="text-muted text-xs text-center">
-        Ao enviar, você concorda em ser contactado pela equipe AssetGuard.
+      <p className="text-ink-faint text-xs text-center">
+        Ao enviar, você autoriza o contato da equipe Viz.
       </p>
     </form>
   );

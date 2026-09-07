@@ -1,26 +1,27 @@
 import Herosection from "./components/Herosection";
-import Explai from "./components/explai";
-import ConstrutoraComoFunciona from "./components/construtora-comofunciona";
 import CondominioComoFunciona from "./components/condominio-comofunciona";
+import ConstrutoraComoFunciona from "./components/construtora-comofunciona";
+import SmartLiving from "./components/smart-living";
 import Contato from "./components/contato";
-import Header from "./components/header";
-
+import Footer from "./components/footer";
+import { QuoteProvider } from "./components/quote-form";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <QuoteProvider>
+      <div className="min-h-screen bg-white text-ink">
+        <main>
+          <div className="bg-zinc-950">
+            <Herosection />
+          </div>
+          <CondominioComoFunciona />
+          <ConstrutoraComoFunciona />
+          <SmartLiving />
+          <Contato />
+        </main>
 
-      <Header />
-
-      <main>
-
-        <Herosection />
-        <Explai />
-        <ConstrutoraComoFunciona />
-        <CondominioComoFunciona />
-        <Contato />
-
-      </main>
-    </div>
+        <Footer />
+      </div>
+    </QuoteProvider>
   );
 }
