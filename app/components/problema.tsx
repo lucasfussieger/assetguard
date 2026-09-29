@@ -1,24 +1,13 @@
 import { DropletOff, EyeOff, ReceiptText } from "lucide-react";
 
+import { problems } from "../lib/content";
 import Reveal from "./reveal";
 
-const problems = [
-  {
-    icon: ReceiptText,
-    title: "A conta vem alta e ninguém sabe por quê.",
-    text: "Um vazamento escondido corre dia e noite. Ele só aparece na fatura, um mês depois.",
-  },
-  {
-    icon: DropletOff,
-    title: "A água acaba sem aviso.",
-    text: "A bomba para ou a boia trava. Quem avisa é o morador que ficou sem banho.",
-  },
-  {
-    icon: EyeOff,
-    title: "A gestão não enxerga a água.",
-    text: "Reservas, avisos e manutenções ficam de um lado. Reservatório e hidrômetro ficam do outro, sem ninguém olhando.",
-  },
-];
+const icons: Record<(typeof problems)[number]["id"], typeof EyeOff> = {
+  conta: ReceiptText,
+  falta: DropletOff,
+  gestao: EyeOff,
+};
 
 export default function Problema() {
   return (
@@ -47,19 +36,23 @@ export default function Problema() {
         </Reveal>
 
         <div className="mt-14 grid gap-4 md:grid-cols-3 md:gap-5">
-          {problems.map(({ icon: Icon, title, text }, index) => (
-            <Reveal key={title} delay={index * 0.08}>
-              <article className="h-full rounded-3xl border border-white/10 bg-white/[0.03] p-7 transition-colors hover:border-white/20 hover:bg-white/[0.05] sm:p-8">
-                <span className="grid size-12 place-items-center rounded-2xl bg-brand-1/10 text-brand-1 ring-1 ring-inset ring-brand-1/25">
-                  <Icon className="size-6" strokeWidth={1.75} />
-                </span>
-                <h3 className="mt-7 text-xl font-semibold leading-snug text-white">
-                  {title}
-                </h3>
-                <p className="mt-3 leading-relaxed text-white/60">{text}</p>
-              </article>
-            </Reveal>
-          ))}
+          {problems.map(({ id, title, text }, index) => {
+            const Icon = icons[id];
+
+            return (
+              <Reveal key={id} delay={index * 0.08}>
+                <article className="h-full rounded-3xl border border-white/10 bg-white/[0.03] p-7 transition-colors hover:border-white/20 hover:bg-white/[0.05] sm:p-8">
+                  <span className="grid size-12 place-items-center rounded-2xl bg-brand-1/10 text-brand-1 ring-1 ring-inset ring-brand-1/25">
+                    <Icon className="size-6" strokeWidth={1.75} />
+                  </span>
+                  <h3 className="mt-7 text-xl font-semibold leading-snug text-white">
+                    {title}
+                  </h3>
+                  <p className="mt-3 leading-relaxed text-white/60">{text}</p>
+                </article>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -18,6 +18,10 @@ const AI_CRAWLERS = [
   "Applebot-Extended",
   "Amazonbot",
   "meta-externalagent",
+  "DuckAssistBot",
+  "MistralAI-User",
+  "cohere-ai",
+  "YouBot",
   "Bytespider",
   "CCBot",
 ];

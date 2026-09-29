@@ -15,12 +15,14 @@ import {
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
 });
 
+/** Só a linha "smart living" do logotipo usa Inter. */
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  weight: "300",
 });
 
 const blackOpsOne = Black_Ops_One({
@@ -73,6 +75,10 @@ export const metadata: Metadata = {
     telephone: true,
     email: true,
     address: false,
+  },
+  // Código da propriedade no Google Search Console (Vercel > Environment Variables).
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
   },
 };
 

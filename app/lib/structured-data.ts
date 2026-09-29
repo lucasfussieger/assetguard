@@ -1,9 +1,17 @@
-import { faq, features, modules } from "./content";
+import {
+  audiences,
+  faq,
+  features,
+  joinPt,
+  modules,
+  steps,
+} from "./content";
 import {
   BRAND_NAME,
   CONTACT_PHONE,
   SITE_DESCRIPTION,
   SITE_NAME,
+  SITE_SUMMARY,
   SITE_TITLE,
   SITE_URL,
   SLOGAN,
@@ -22,8 +30,22 @@ export const structuredData = {
       name: BRAND_NAME,
       alternateName: SITE_NAME,
       url: SITE_URL,
-      description: SITE_DESCRIPTION,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/icon-512.png`,
+        width: 512,
+        height: 512,
+      },
+      image: `${SITE_URL}/opengraph-image`,
+      description: SITE_SUMMARY,
       slogan: SLOGAN,
+      knowsAbout: [
+        "Monitoramento de reservatórios de água",
+        "Leitura remota de hidrômetro",
+        "Detecção de vazamentos em condomínios",
+        "Gestão de condomínios",
+        "Smart living",
+      ],
       areaServed: {
         "@type": "Country",
         name: "Brasil",
@@ -56,6 +78,8 @@ export const structuredData = {
       inLanguage: "pt-BR",
       isPartOf: { "@id": `${SITE_URL}/#website` },
       about: { "@id": `${SITE_URL}/#organization` },
+      primaryImageOfPage: `${SITE_URL}/opengraph-image`,
+      dateModified: new Date().toISOString(),
     },
     {
       "@type": "SoftwareApplication",
@@ -64,8 +88,9 @@ export const structuredData = {
       applicationCategory: "BusinessApplication",
       applicationSubCategory: "Smart living para condomínios",
       operatingSystem: "Web",
-      description:
-        "App que mostra o nível dos reservatórios e o consumo do hidrômetro do prédio em tempo real, com alertas no celular, e cuida da gestão do condomínio: reservas, comunicados, manutenções, documentos e encomendas.",
+      description: `App que mostra o nível dos reservatórios e o consumo do hidrômetro do prédio em tempo real, com alertas no celular, e cuida da gestão do condomínio: ${joinPt(
+        modules.map((item) => item.name.toLowerCase())
+      )}.`,
       publisher: { "@id": `${SITE_URL}/#organization` },
       featureList: [...features, ...modules].map((item) => item.name),
     },
@@ -81,16 +106,10 @@ export const structuredData = {
         "@type": "Country",
         name: "Brasil",
       },
-      audience: [
-        {
-          "@type": "Audience",
-          audienceType: "Condomínios e síndicos",
-        },
-        {
-          "@type": "Audience",
-          audienceType: "Construtoras e incorporadoras",
-        },
-      ],
+      audience: audiences.map((item) => ({
+        "@type": "Audience",
+        audienceType: item.subtitle,
+      })),
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: "Monitoramento e gestão da Viz",
@@ -105,8 +124,24 @@ export const structuredData = {
       },
     },
     {
+      "@type": "HowTo",
+      "@id": `${SITE_URL}/#como-funciona`,
+      name: "Como a Viz monitora a água do prédio",
+      description:
+        "Do sensor ao celular: instalação, leitura contínua e alerta quando algo sai do normal.",
+      inLanguage: "pt-BR",
+      step: steps.map((item, index) => ({
+        "@type": "HowToStep",
+        position: index + 1,
+        name: item.title,
+        text: item.text,
+        url: `${SITE_URL}/#como-funciona`,
+      })),
+    },
+    {
       "@type": "FAQPage",
       "@id": `${SITE_URL}/#faq`,
+      inLanguage: "pt-BR",
       mainEntity: faq.map((item) => ({
         "@type": "Question",
         name: item.question,

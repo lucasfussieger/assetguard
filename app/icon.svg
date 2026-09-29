@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="agua" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#007e80"/>
+      <stop offset="1" stop-color="#00b9bd"/>
+    </linearGradient>
+    <clipPath id="forma">
+      <rect width="64" height="64" rx="14"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#forma)">
+    <rect width="64" height="64" fill="#001b21"/>
+    <path d="M0 31 Q 8 36 16 31 T 32 31 T 48 31 T 64 31 V 64 H 0 Z" fill="#00b9bd" fill-opacity=".45"/>
+    <path d="M0 34 Q 8 29 16 34 T 32 34 T 48 34 T 64 34 V 64 H 0 Z" fill="url(#agua)"/>
+  </g>
+</svg>

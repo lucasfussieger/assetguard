@@ -9,16 +9,24 @@ import { useEffect, useRef } from "react";
  */
 
 let observer: IntersectionObserver | undefined;
+const pending = new Set<HTMLElement>();
+
+function show(element: HTMLElement) {
+  element.dataset.inView = "";
+  pending.delete(element);
+  observer?.unobserve(element);
+}
 
 function getObserver() {
   observer ??= new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
-        // Na tela, ou já acima dela (recarregou no meio da página).
-        if (entry.isIntersecting || entry.boundingClientRect.bottom < 0) {
-          (entry.target as HTMLElement).dataset.inView = "";
-          observer?.unobserve(entry.target);
-        }
+        if (entry.isIntersecting) show(entry.target as HTMLElement);
+      }
+      // O que já ficou acima da tela aparece também: recarregar no meio da
+      // página ou saltar por âncora passa rápido demais para o observer ver.
+      for (const element of pending) {
+        if (element.getBoundingClientRect().bottom < 0) show(element);
       }
     },
     { rootMargin: "0px 0px -80px 0px" }
@@ -48,8 +56,12 @@ export default function Reveal({
     if (immediate || !element) return;
 
     const io = getObserver();
+    pending.add(element);
     io.observe(element);
-    return () => io.unobserve(element);
+    return () => {
+      pending.delete(element);
+      io.unobserve(element);
+    };
   }, [immediate]);
 
   return (

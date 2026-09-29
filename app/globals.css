@@ -93,27 +93,46 @@ body {
   color: transparent;
 }
 
-/* Luz que passa por dentro das letras */
+/*
+ * Luz que passa por dentro das letras. Uma faixa ciano desliza por cima em
+ * modo "lighten": sobre o fundo claro nada muda, só as letras escuras
+ * acendem. Anima só transform, no compositor; animar background-position
+ * repintava o título a cada frame. Só funciona sobre fundo claro e fora de
+ * um .reveal (a animação dele isola a mistura e a faixa apareceria).
+ */
 .text-shimmer-brand {
-  background: linear-gradient(
-    100deg,
-    var(--brand-3) 0%,
-    var(--brand-4) 38%,
-    var(--brand-5) 50%,
-    var(--brand-4) 62%,
-    var(--brand-3) 100%
-  );
-  background-size: 250% 100%;
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  /* folga para o overflow não cortar descendentes (o "p" de "tempo") */
+  padding: 0 0.04em 0.15em;
+  margin: 0 -0.04em -0.15em;
+  background: linear-gradient(100deg, var(--brand-4) 0%, var(--brand-3) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+}
+
+.text-shimmer-brand::after {
+  content: "";
+  position: absolute;
+  /* começa abaixo do topo: não alcança os descendentes da linha de cima */
+  inset: 0.12em 0 0;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    var(--brand-5) 50%,
+    transparent 70%
+  );
+  mix-blend-mode: lighten;
+  pointer-events: none;
   animation: text-shine 6s ease-in-out infinite;
 }
 
 @keyframes text-shine {
-  0%   { background-position: 150% 0; }
-  100% { background-position: -150% 0; }
+  0%        { transform: translateX(-100%); }
+  55%, 100% { transform: translateX(100%); }
 }
 
 /* ---------- Botões ---------- */
@@ -202,8 +221,10 @@ body {
 
 /*
  * Entrada ao rolar. O script do <head> marca <html class="js">; sem JS nada
- * fica escondido. Cada .reveal espera parado até o Reveal marcar
- * data-in-view, e a água e as barras dentro dele esperam junto.
+ * fica escondido. Até o Reveal marcar data-in-view, o bloco (e a água e as
+ * barras dentro dele) fica parado no estado inicial, sem animação criada:
+ * animação pausada é recalculada a cada frame na thread principal enquanto
+ * as ondas rodam.
  */
 @keyframes rise {
   from { opacity: 0; transform: translateY(24px); }
@@ -217,21 +238,29 @@ body {
   from { transform: scaleY(0); }
 }
 
-.js .reveal {
-  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s) both;
+.js .reveal:not([data-in-view]) {
+  opacity: 0;
+  transform: translateY(24px);
 }
 
-.js .fill-up {
-  animation: fill-up 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+.js .reveal:not([data-in-view]) .fill-up {
+  transform: translateY(100%);
 }
 
-.js .grow-y {
-  animation: grow-y 0.6s cubic-bezier(0.22, 1, 0.36, 1) var(--bar-delay, 0s) both;
+.js .reveal:not([data-in-view]) .grow-y {
+  transform: scaleY(0);
 }
 
-.js .reveal:not([data-in-view]),
-.js .reveal:not([data-in-view]) :is(.fill-up, .grow-y) {
-  animation-play-state: paused;
+.js .reveal[data-in-view] {
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s) backwards;
+}
+
+.js .reveal[data-in-view] .fill-up {
+  animation: fill-up 1.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.js .reveal[data-in-view] .grow-y {
+  animation: grow-y 0.6s cubic-bezier(0.22, 1, 0.36, 1) var(--bar-delay, 0s) backwards;
 }
 
 @keyframes float {

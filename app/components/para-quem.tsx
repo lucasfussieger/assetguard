@@ -1,38 +1,24 @@
 import { ArrowRight, Building2, Check, HardHat } from "lucide-react";
 
+import { audiences } from "../lib/content";
 import { QuoteButton } from "./quote-form";
 import Reveal from "./reveal";
 
-const audiences = [
-  {
-    id: "condominio",
-    tipo: "condominio",
+const cards: Record<
+  (typeof audiences)[number]["id"],
+  { icon: typeof HardHat; cta: string; dark: boolean }
+> = {
+  condominio: {
     icon: Building2,
-    title: "Condomínios",
-    subtitle: "Síndicos e administradoras",
-    points: [
-      "Vazamento percebido no mesmo dia, não na próxima conta",
-      "Aviso antes de faltar água",
-      "Gestão do dia a dia e água do prédio no mesmo app",
-    ],
     cta: "Quero no meu condomínio",
     dark: false,
   },
-  {
-    id: "construtora",
-    tipo: "construtora",
+  construtora: {
     icon: HardHat,
-    title: "Construtoras",
-    subtitle: "Construtoras e incorporadoras",
-    points: [
-      "Um prédio smart living, diferencial concreto na venda",
-      "Histórico técnico que protege a construtora na garantia",
-      "Falhas percebidas cedo, antes de virarem obra corretiva",
-    ],
     cta: "Quero no meu empreendimento",
     dark: true,
   },
-] as const;
+};
 
 export default function ParaQuem() {
   return (
@@ -52,8 +38,9 @@ export default function ParaQuem() {
         </Reveal>
 
         <div className="mt-16 grid gap-5 lg:grid-cols-2">
-          {audiences.map(
-            ({ id, tipo, icon: Icon, title, subtitle, points, cta, dark }, index) => (
+          {audiences
+            .map((audience) => ({ ...audience, ...cards[audience.id] }))
+            .map(({ id, icon: Icon, title, subtitle, points, cta, dark }, index) => (
               <Reveal key={id} delay={index * 0.1} className="h-full min-w-0">
                 <article
                   id={id}
@@ -117,7 +104,7 @@ export default function ParaQuem() {
                   </ul>
 
                   <QuoteButton
-                    tipo={tipo}
+                    tipo={id}
                     className="btn-primary group relative mt-10 w-full whitespace-normal px-5 py-3.5 text-center text-sm sm:w-auto sm:self-start sm:px-6 sm:text-base"
                   >
                     {cta}
@@ -129,8 +116,7 @@ export default function ParaQuem() {
                   </QuoteButton>
                 </article>
               </Reveal>
-            )
-          )}
+            ))}
         </div>
       </div>
     </section>

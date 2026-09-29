@@ -1,36 +1,16 @@
 import { Activity, Check, Waves } from "lucide-react";
 
+import { features } from "../lib/content";
 import Reveal from "./reveal";
 import { ConsumptionPanel, ReservoirPanel } from "./viz-visuals";
 
-const features = [
-  {
-    id: "reservatorios",
-    icon: Waves,
-    tag: "Nível dos reservatórios",
-    title: "Saiba quanta água tem na caixa, sem subir na laje.",
-    text: "O app mostra o nível de cada reservatório em porcentagem e em litros, a qualquer hora.",
-    points: [
-      "Alerta de nível baixo, antes de a água acabar",
-      "Alerta de transbordo, quando a água escapa pelo ladrão",
-      "Histórico do nível ao longo do dia",
-    ],
-    visual: <ReservoirPanel />,
-  },
-  {
-    id: "hidrometro",
-    icon: Activity,
-    tag: "Leitura do hidrômetro",
-    title: "Veja o consumo hora a hora, não só no fim do mês.",
-    text: "A Viz lê o hidrômetro sozinha. Você acompanha quanto o prédio gasta por hora, por dia e por mês.",
-    points: [
-      "Alerta de consumo fora do padrão, como água correndo de madrugada",
-      "Comparação entre dias, semanas e meses",
-      "Fim da leitura manual e da anotação em planilha",
-    ],
-    visual: <ConsumptionPanel />,
-  },
-];
+const visuals: Record<
+  (typeof features)[number]["id"],
+  { icon: typeof Waves; visual: React.ReactNode }
+> = {
+  reservatorios: { icon: Waves, visual: <ReservoirPanel /> },
+  hidrometro: { icon: Activity, visual: <ConsumptionPanel /> },
+};
 
 export default function Solucao() {
   return (
@@ -56,7 +36,7 @@ export default function Solucao() {
 
         <div className="mt-20 flex flex-col gap-24 sm:mt-24 sm:gap-32">
           {features.map((feature, index) => {
-            const Icon = feature.icon;
+            const { icon: Icon, visual } = visuals[feature.id];
             const reversed = index % 2 === 1;
 
             return (
@@ -74,14 +54,14 @@ export default function Solucao() {
                           "radial-gradient(circle, color-mix(in srgb, var(--brand-5) 18%, transparent) 0%, transparent 65%)",
                       }}
                     />
-                    {feature.visual}
+                    {visual}
                   </div>
                 </Reveal>
 
                 <Reveal delay={0.1} className={reversed ? "lg:order-1" : undefined}>
                   <span className="inline-flex items-center gap-2 rounded-full bg-brand-5/10 px-3.5 py-1.5 text-sm font-semibold text-brand-4">
                     <Icon className="size-4" strokeWidth={2.25} />
-                    {feature.tag}
+                    {feature.name}
                   </span>
                   <h3 className="mt-6 text-3xl font-semibold leading-tight tracking-tight text-ink sm:text-4xl">
                     {feature.title}

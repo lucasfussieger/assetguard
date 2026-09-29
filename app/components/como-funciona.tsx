@@ -1,24 +1,13 @@
 import { BellRing, RadioTower, Wrench } from "lucide-react";
 
+import { steps } from "../lib/content";
 import Reveal from "./reveal";
 
-const steps = [
-  {
-    icon: Wrench,
-    title: "Instalamos os sensores",
-    text: "Nossa equipe coloca os sensores no reservatório e no hidrômetro e prepara o app para o condomínio.",
-  },
-  {
-    icon: RadioTower,
-    title: "A leitura não para",
-    text: "As medições chegam ao app dia e noite, sem ninguém anotar nada.",
-  },
-  {
-    icon: BellRing,
-    title: "Você recebe o alerta",
-    text: "Se o nível cair ou o consumo sair do padrão, o aviso chega no celular e você age cedo.",
-  },
-];
+const icons: Record<(typeof steps)[number]["id"], typeof Wrench> = {
+  instalacao: Wrench,
+  leitura: RadioTower,
+  alerta: BellRing,
+};
 
 export default function ComoFunciona() {
   return (
@@ -41,24 +30,28 @@ export default function ComoFunciona() {
         </Reveal>
 
         <ol className="mt-16 grid gap-5 md:grid-cols-3">
-          {steps.map(({ icon: Icon, title, text }, index) => (
-            <li key={title}>
-              <Reveal delay={index * 0.1} className="h-full">
-                <div className="relative flex h-full flex-col items-center rounded-3xl bg-white p-8 text-center ring-1 ring-line">
-                  <span className="relative grid size-14 place-items-center rounded-2xl bg-gradient-to-br from-brand-4 to-brand-5 text-white shadow-[0_12px_30px_-12px_var(--brand-4)]">
-                    <Icon className="size-6" strokeWidth={2} />
-                    <span className="absolute -right-2 -top-2 grid size-6 place-items-center rounded-full bg-ink text-[11px] font-semibold text-white ring-4 ring-white">
-                      {index + 1}
+          {steps.map(({ id, title, text }, index) => {
+            const Icon = icons[id];
+
+            return (
+              <li key={id}>
+                <Reveal delay={index * 0.1} className="h-full">
+                  <div className="relative flex h-full flex-col items-center rounded-3xl bg-white p-8 text-center ring-1 ring-line">
+                    <span className="relative grid size-14 place-items-center rounded-2xl bg-gradient-to-br from-brand-4 to-brand-5 text-white shadow-[0_12px_30px_-12px_var(--brand-4)]">
+                      <Icon className="size-6" strokeWidth={2} />
+                      <span className="absolute -right-2 -top-2 grid size-6 place-items-center rounded-full bg-ink text-[11px] font-semibold text-white ring-4 ring-white">
+                        {index + 1}
+                      </span>
                     </span>
-                  </span>
-                  <h3 className="mt-7 text-xl font-semibold text-ink">
-                    {title}
-                  </h3>
-                  <p className="mt-3 leading-relaxed text-ink-soft">{text}</p>
-                </div>
-              </Reveal>
-            </li>
-          ))}
+                    <h3 className="mt-7 text-xl font-semibold text-ink">
+                      {title}
+                    </h3>
+                    <p className="mt-3 leading-relaxed text-ink-soft">{text}</p>
+                  </div>
+                </Reveal>
+              </li>
+            );
+          })}
         </ol>
       </div>
     </section>

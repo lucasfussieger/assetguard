@@ -18,7 +18,8 @@ export function Wordmark({ tone = "dark" }: { tone?: "dark" | "light" }) {
         }`}
       >
         VIZ
-      </span>
+      </span>{" "}
+      {/* o espaço não aparece no flex, mas faz leitores lerem "VIZ smart living" */}
       <span
         className={`mt-1 font-tagline text-[9px] font-light uppercase tracking-[0.28em] ${
           tone === "dark" ? "text-brand-4" : "text-brand-5"
@@ -34,7 +35,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-white/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-4 sm:h-[4.5rem] sm:px-6 lg:px-8">
-        <Link href="/" aria-label="Viz, página inicial">
+        <Link href="/" aria-label="Viz smart living, página inicial">
           <Wordmark />
         </Link>
 

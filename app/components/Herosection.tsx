@@ -2,7 +2,7 @@ import { ArrowRight, Check } from "lucide-react";
 
 import { QuoteButton } from "./quote-form";
 import Reveal from "./reveal";
-import { DashboardPreview, LeakAlert } from "./viz-visuals";
+import { DashboardPreview, LeakAlert, LiveDot } from "./viz-visuals";
 
 const proofs = [
   "Instalação feita pela equipe Viz",
@@ -34,12 +34,15 @@ export default function Herosection() {
 
       <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-4 pt-14 pb-20 sm:px-6 sm:pt-20 sm:pb-28 lg:grid-cols-[1.05fr_1fr] lg:gap-12 lg:px-8 lg:pt-24">
         <div>
-          <h1
-            id="hero-title"
-            className="text-[2.6rem] font-semibold leading-[1.05] tracking-[-0.03em] text-ink sm:text-6xl lg:text-[4.25rem]"
-          >
-            Veja a água do seu prédio{" "}
-            <span className="text-shimmer-brand">em tempo real.</span>
+          <h1 id="hero-title">
+            <span className="flex items-center gap-2.5 text-sm font-semibold text-brand-4">
+              <LiveDot />
+              Monitoramento de água para condomínios
+            </span>
+            <span className="mt-5 block text-[2.6rem] font-semibold leading-[1.05] tracking-[-0.03em] text-ink sm:text-6xl lg:text-[4.25rem]">
+              Veja a água do seu prédio{" "}
+              <span className="text-shimmer-brand">em tempo real.</span>
+            </span>
           </h1>
 
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">

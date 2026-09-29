@@ -1,7 +1,9 @@
 import {
+  Barcode,
   CalendarCheck,
   Check,
   Clock,
+  Copy,
   FileText,
   Megaphone,
   Package,
@@ -177,6 +179,41 @@ function ManutencoesScreen() {
   );
 }
 
+function BoletosScreen() {
+  return (
+    <Screen>
+      <div className="flex items-center justify-between">
+        <p className="text-sm font-semibold">Boleto do condomínio</p>
+        <p className="text-xs text-ink-faint">Apto 302</p>
+      </div>
+
+      <div className="mt-3 flex items-start justify-between gap-3 rounded-xl bg-surface-soft p-3">
+        <div>
+          <p className="text-xs text-ink-faint">Outubro</p>
+          <p className="mt-0.5 text-2xl font-semibold tabular-nums">
+            R$ 685,40
+          </p>
+        </div>
+        <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand-1/10 px-2.5 py-1 text-[11px] font-semibold text-brand-2 tabular-nums">
+          <span className="size-1.5 rounded-full bg-brand-2" />
+          Vence 10/10
+        </span>
+      </div>
+
+      <div className="mt-3 flex items-center gap-2.5 rounded-xl border border-line px-3 py-2.5">
+        <Barcode size={16} strokeWidth={2} className="shrink-0 text-ink-soft" />
+        <p className="min-w-0 flex-1 truncate text-sm font-medium">
+          Código de barras
+        </p>
+        <span className="inline-flex shrink-0 items-center gap-1 text-[11px] font-semibold text-brand-4">
+          <Copy size={12} strokeWidth={2.5} />
+          Copiar
+        </span>
+      </div>
+    </Screen>
+  );
+}
+
 const files = [
   { name: "Ata da assembleia", meta: "Setembro · PDF" },
   { name: "Regimento interno", meta: "PDF" },
@@ -247,6 +284,11 @@ const cards: Record<
   },
   comunicados: { icon: Megaphone, screen: <ComunicadosScreen /> },
   manutencoes: { icon: Wrench, screen: <ManutencoesScreen /> },
+  boletos: {
+    icon: Barcode,
+    screen: <BoletosScreen />,
+    className: "md:col-span-2",
+  },
   documentos: { icon: FileText, screen: <DocumentosScreen /> },
   encomendas: { icon: Package, screen: <EncomendasScreen /> },
 };
@@ -322,8 +364,11 @@ export default function Gestao() {
             );
           })}
 
-          <Reveal className="min-w-0 md:col-span-2 lg:col-span-3">
-            <div className="flex flex-col gap-2 rounded-3xl border border-dashed border-white/15 px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:gap-8 sm:px-8">
+          <Reveal
+            delay={0.16}
+            className="min-w-0 md:col-span-2 lg:col-span-1"
+          >
+            <div className="flex h-full flex-col gap-2 rounded-3xl border border-dashed border-white/15 px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:gap-8 sm:px-8 lg:flex-col lg:items-start lg:justify-center lg:gap-3">
               <p className="text-lg font-semibold text-white">
                 E outros módulos para a rotina do prédio.
               </p>
