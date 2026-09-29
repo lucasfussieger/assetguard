@@ -18,7 +18,6 @@ export default function Contato() {
         style={{
           background:
             "radial-gradient(circle, color-mix(in srgb, var(--brand-5) 20%, transparent) 0%, color-mix(in srgb, var(--brand-4) 8%, transparent) 45%, transparent 70%)",
-          filter: "blur(60px)",
         }}
       />
 

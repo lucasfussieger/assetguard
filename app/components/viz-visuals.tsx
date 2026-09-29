@@ -1,11 +1,11 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import { TriangleAlert } from "lucide-react";
 
 /*
  * Peças visuais do painel da Viz. Os números são ilustrativos: mostram como
  * a leitura aparece para o síndico, não dados de um prédio real.
+ *
+ * A água subindo (.fill-up) e as barras crescendo (.grow-y) são CSS: começam
+ * quando o Reveal em volta entra na tela.
  */
 
 /** Consumo por hora (litros) de um prédio com vazamento entre 01h e 04h. */
@@ -21,8 +21,6 @@ const levelHistory = [
   70, 74, 78, 82, 85, 86, 80, 71, 63, 58, 55, 57, 54, 52, 56, 60, 63, 60, 54,
   47, 44, 48, 55, 61,
 ];
-
-const ease = [0.22, 1, 0.36, 1] as const;
 
 const formatNumber = (value: number, digits = 0) =>
   value.toLocaleString("pt-BR", {
@@ -68,9 +66,6 @@ export function Tank({
   className?: string;
   marks?: boolean;
 }) {
-  const reduce = useReducedMotion();
-  const height = `${level}%`;
-
   return (
     <div
       role="img"
@@ -85,17 +80,14 @@ export function Tank({
         />
       ))}
 
-      <motion.div
-        className="absolute inset-x-0 bottom-0"
-        initial={reduce ? { height } : { height: "6%" }}
-        whileInView={{ height }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.6, ease }}
+      <div
+        className="fill-up absolute inset-x-0 bottom-0"
+        style={{ height: `${level}%` }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-brand-4 to-brand-5" />
         <Wave className="text-brand-5/45 animate-wave-slow" />
         <Wave className="text-brand-5 animate-wave" />
-      </motion.div>
+      </div>
 
       {marks && (
         <>
@@ -123,7 +115,6 @@ export function HourlyChart({
   showAxis?: boolean;
   overlay?: React.ReactNode;
 }) {
-  const reduce = useReducedMotion();
   const max = Math.max(...hourlyConsumption);
 
   return (
@@ -137,18 +128,19 @@ export function HourlyChart({
           const isLeak = hour >= leakHours.from && hour <= leakHours.to;
 
           return (
-            <motion.div
+            <div
               key={hour}
-              className={`flex-1 origin-bottom rounded-t-[3px] ${
+              className={`grow-y flex-1 origin-bottom rounded-t-[3px] ${
                 isLeak
                   ? "bg-gradient-to-t from-brand-2 to-brand-1"
                   : "bg-gradient-to-t from-brand-4/80 to-brand-5/80"
               }`}
-              style={{ height: `${Math.max((value / max) * 100, 4)}%` }}
-              initial={reduce ? false : { scaleY: 0 }}
-              whileInView={{ scaleY: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: hour * 0.025, ease }}
+              style={
+                {
+                  height: `${Math.max((value / max) * 100, 4)}%`,
+                  "--bar-delay": `${hour * 0.025}s`,
+                } as React.CSSProperties
+              }
             />
           );
         })}
@@ -173,7 +165,7 @@ export function HourlyChart({
 export function LeakAlert({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`flex w-[17.5rem] items-start gap-3 rounded-2xl bg-white/95 p-4 shadow-[0_24px_60px_-20px_rgba(0,37,44,0.45)] ring-1 ring-line backdrop-blur ${className}`}
+      className={`flex w-[17.5rem] items-start gap-3 rounded-2xl bg-white p-4 shadow-[0_24px_60px_-20px_rgba(0,37,44,0.45)] ring-1 ring-line ${className}`}
     >
       <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-brand-1/10 text-brand-2">
         <TriangleAlert className="size-5" strokeWidth={2} />

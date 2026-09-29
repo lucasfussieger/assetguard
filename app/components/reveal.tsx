@@ -1,32 +1,69 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useRef } from "react";
 
-/** Entrada suave ao rolar a página. Sem efeito para quem pede menos movimento. */
+/*
+ * Entrada suave ao rolar a página. A animação é CSS (.reveal em globals.css),
+ * em transform/opacity: roda no compositor e não trava enquanto a página
+ * hidrata. Aqui só marcamos data-in-view quando o bloco entra na tela.
+ */
+
+let observer: IntersectionObserver | undefined;
+
+function getObserver() {
+  observer ??= new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        // Na tela, ou já acima dela (recarregou no meio da página).
+        if (entry.isIntersecting || entry.boundingClientRect.bottom < 0) {
+          (entry.target as HTMLElement).dataset.inView = "";
+          observer?.unobserve(entry.target);
+        }
+      }
+    },
+    { rootMargin: "0px 0px -80px 0px" }
+  );
+  return observer;
+}
+
 export default function Reveal({
   children,
-  className,
+  className = "",
   delay = 0,
+  immediate = false,
 }: {
   children: React.ReactNode;
   className?: string;
   delay?: number;
+  /** Anima já no carregamento, sem esperar o JS (use no topo da página). */
+  immediate?: boolean;
 }) {
-  const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
 
-  if (reduce) {
-    return <div className={className}>{children}</div>;
-  }
+  useEffect(() => {
+    // Avisa o script do <head> que o JS carregou (senão ele mostra tudo parado).
+    document.documentElement.dataset.reveal = "ready";
+
+    const element = ref.current;
+    if (immediate || !element) return;
+
+    const io = getObserver();
+    io.observe(element);
+    return () => io.unobserve(element);
+  }, [immediate]);
 
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+    <div
+      ref={ref}
+      className={`reveal ${className}`}
+      data-in-view={immediate ? "" : undefined}
+      style={
+        delay
+          ? ({ "--reveal-delay": `${delay}s` } as React.CSSProperties)
+          : undefined
+      }
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

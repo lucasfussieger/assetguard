@@ -84,6 +84,12 @@ export const viewport: Viewport = {
   ],
 };
 
+/*
+ * Liga as animações de entrada antes da primeira pintura, sem piscar. Se o JS
+ * do site não carregar, tira a classe e mostra tudo parado em vez de escondido.
+ */
+const revealScript = `(function(d){d.classList.add("js");addEventListener("load",function(){setTimeout(function(){if(!d.dataset.reveal)d.classList.remove("js")},3000)})})(document.documentElement)`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -94,7 +100,11 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${poppins.variable} ${inter.variable} ${blackOpsOne.variable} h-full antialiased scroll-smooth`}
       style={{ fontFamily: "var(--font-poppins), sans-serif" }}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: revealScript }} />
+      </head>
       <body className="min-h-full flex flex-col bg-white text-ink">
         <script
           type="application/ld+json"

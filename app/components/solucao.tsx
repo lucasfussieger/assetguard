@@ -72,7 +72,6 @@ export default function Solucao() {
                       style={{
                         background:
                           "radial-gradient(circle, color-mix(in srgb, var(--brand-5) 18%, transparent) 0%, transparent 65%)",
-                        filter: "blur(40px)",
                       }}
                     />
                     {feature.visual}

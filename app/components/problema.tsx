@@ -33,7 +33,6 @@ export default function Problema() {
         style={{
           background:
             "radial-gradient(ellipse, color-mix(in srgb, var(--brand-1) 16%, transparent) 0%, transparent 65%)",
-          filter: "blur(60px)",
         }}
       />
 

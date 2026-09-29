@@ -22,7 +22,6 @@ export default function Herosection() {
         style={{
           background:
             "radial-gradient(circle, color-mix(in srgb, var(--brand-5) 22%, transparent) 0%, transparent 65%)",
-          filter: "blur(40px)",
         }}
       />
       <div
@@ -30,7 +29,6 @@ export default function Herosection() {
         style={{
           background:
             "radial-gradient(circle, color-mix(in srgb, var(--brand-1) 12%, transparent) 0%, transparent 65%)",
-          filter: "blur(60px)",
         }}
       />
 
@@ -82,7 +80,11 @@ export default function Herosection() {
           </ul>
         </div>
 
-        <Reveal delay={0.15} className="relative mx-auto w-full max-w-lg lg:max-w-none">
+        <Reveal
+          immediate
+          delay={0.15}
+          className="relative mx-auto w-full max-w-lg lg:max-w-none"
+        >
           <DashboardPreview />
           <LeakAlert className="animate-float relative mx-auto -mt-6 sm:absolute sm:-bottom-16 sm:-right-8 sm:mt-0 lg:-right-6" />
         </Reveal>

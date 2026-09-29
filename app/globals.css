@@ -200,6 +200,40 @@ body {
 
 /* ---------- Animações ---------- */
 
+/*
+ * Entrada ao rolar. O script do <head> marca <html class="js">; sem JS nada
+ * fica escondido. Cada .reveal espera parado até o Reveal marcar
+ * data-in-view, e a água e as barras dentro dele esperam junto.
+ */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(24px); }
+}
+
+@keyframes fill-up {
+  from { transform: translateY(100%); }
+}
+
+@keyframes grow-y {
+  from { transform: scaleY(0); }
+}
+
+.js .reveal {
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s) both;
+}
+
+.js .fill-up {
+  animation: fill-up 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.js .grow-y {
+  animation: grow-y 0.6s cubic-bezier(0.22, 1, 0.36, 1) var(--bar-delay, 0s) both;
+}
+
+.js .reveal:not([data-in-view]),
+.js .reveal:not([data-in-view]) :is(.fill-up, .grow-y) {
+  animation-play-state: paused;
+}
+
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50%      { transform: translateY(-10px); }
@@ -248,6 +282,7 @@ details > summary::-webkit-details-marker {
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
