@@ -17,6 +17,11 @@
   --surface: #ffffff;
   --surface-soft: #f2fafa;
   --line: rgba(0, 72, 83, 0.12);
+
+  /* Seções escuras: petróleo profundo, em vez de preto neutro */
+  --deep: #001b21;
+  --deep-2: #002a32;
+  --abyss: #001216; /* rodapé: a água "funda" abaixo da onda */
 }
 
 @theme inline {
@@ -34,6 +39,10 @@
   --color-surface-soft: var(--surface-soft);
   --color-line: var(--line);
 
+  --color-deep: var(--deep);
+  --color-deep-2: var(--deep-2);
+  --color-abyss: var(--abyss);
+
   --color-background: var(--surface);
   --color-foreground: var(--ink);
 
@@ -42,16 +51,34 @@
   --font-tagline: var(--font-inter);
 }
 
+html {
+  /* Âncoras não ficam escondidas atrás do header fixo */
+  scroll-padding-top: 5.5rem;
+}
+
 body {
   background: var(--surface);
   color: var(--ink);
   font-family: var(--font-poppins), sans-serif;
 }
 
+::selection {
+  background: color-mix(in srgb, var(--brand-5) 30%, transparent);
+}
+
 /* ---------- Gradientes de texto ---------- */
 
 .text-gradient-brand {
   background: linear-gradient(120deg, var(--brand-4) 0%, var(--brand-5) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Versão clara para fundos escuros */
+.text-gradient-light {
+  background: linear-gradient(120deg, var(--brand-5) 0%, #8ef0f1 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -89,12 +116,67 @@ body {
   100% { background-position: -150% 0; }
 }
 
+/* ---------- Botões ---------- */
+/* Na camada components para que utilitários do Tailwind possam sobrescrever. */
+
+@layer components {
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    border-radius: 9999px;
+    background: linear-gradient(100deg, var(--brand-1) 0%, var(--brand-2) 100%);
+    color: #fff;
+    font-weight: 600;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.25) inset,
+      0 10px 24px -12px color-mix(in srgb, var(--brand-2) 70%, transparent);
+    transition: filter 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+
+  .btn-primary:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.25) inset,
+      0 16px 32px -14px color-mix(in srgb, var(--brand-2) 80%, transparent);
+  }
+
+  .btn-primary:focus-visible,
+  .btn-ghost:focus-visible {
+    outline: 2px solid var(--brand-5);
+    outline-offset: 3px;
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    border-radius: 9999px;
+    font-weight: 600;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  }
+}
+
 /* ---------- Superfícies ---------- */
 
 .card-soft {
   background: linear-gradient(155deg, #ffffff 0%, var(--surface-soft) 100%);
   border: 1px solid var(--line);
   box-shadow: 0 1px 2px rgba(0, 72, 83, 0.04), 0 18px 40px -28px rgba(0, 72, 83, 0.35);
+}
+
+.panel {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  box-shadow:
+    0 1px 2px rgba(0, 72, 83, 0.05),
+    0 30px 60px -30px rgba(0, 72, 83, 0.35),
+    0 60px 120px -60px rgba(0, 185, 189, 0.35);
 }
 
 /* Malha sutil de fundo */
@@ -105,24 +187,69 @@ body {
   background-size: 64px 64px;
 }
 
+.grid-faint-dark {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.mask-fade-y {
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 100%);
+}
+
 /* ---------- Animações ---------- */
 
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50%      { transform: translateY(-14px); }
+  50%      { transform: translateY(-10px); }
 }
 
 .animate-float {
   animation: float 7s ease-in-out infinite;
 }
 
-/* Pulso do sinal IoT */
+/* Superfície da água dentro do reservatório */
+@keyframes wave {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.animate-wave {
+  animation: wave 4s linear infinite;
+}
+
+.animate-wave-slow {
+  animation: wave 7s linear infinite;
+}
+
+/* Pulso do sinal "ao vivo" */
 @keyframes signal-pulse {
-  0%   { transform: scale(0.6); opacity: 0.55; }
-  70%  { transform: scale(1.9); opacity: 0; }
-  100% { transform: scale(1.9); opacity: 0; }
+  0%   { transform: scale(0.6); opacity: 0.6; }
+  70%  { transform: scale(2.2); opacity: 0; }
+  100% { transform: scale(2.2); opacity: 0; }
 }
 
 .animate-signal {
-  animation: signal-pulse 3.2s ease-out infinite;
+  animation: signal-pulse 2.4s ease-out infinite;
+}
+
+/* Detalhes/FAQ: sinal de + vira × ao abrir */
+details > summary {
+  list-style: none;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

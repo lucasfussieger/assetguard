@@ -1,0 +1,542 @@
+PROMPT DE DESIGN — VIZ SMART LIVING
+Guia visual para aplicar no app da Viz a linguagem da nova landing page.
+
+================================================================================
+1. SEU PAPEL E O OBJETIVO
+================================================================================
+
+Você vai atualizar o visual do app da Viz para seguir a mesma linguagem de
+design da landing page descrita abaixo. O resultado deve parecer um produto
+único: quem vê o site e depois abre o app precisa reconhecer as mesmas cores,
+formas, componentes e animações.
+
+O componente mais importante é o RESERVATÓRIO COM ONDAS (seção 5.1). Ele deve
+ser reproduzido com fidelidade e usado em toda tela que mostra nível de água.
+
+================================================================================
+2. ESCOPO: O QUE MUDA E O QUE NÃO MUDA
+================================================================================
+
+MUDA (somente a camada visual):
+- Cores, tipografia, raios de borda, sombras, espaçamentos internos.
+- Aparência de cards, botões, pills de status, listas, gráficos, alertas,
+  campos de formulário, modais.
+- Animações e microinterações.
+- Ícones (estilo e peso do traço).
+
+NÃO MUDA (não toque):
+- Navegação, rotas, menus, abas e a ordem das telas.
+- Hierarquia de acesso: perfis, permissões, o que cada papel (síndico,
+  portaria, morador, administradora) vê ou pode fazer.
+- Arquitetura da informação: quais dados aparecem em cada tela e em que
+  ordem de importância.
+- Regras de negócio, chamadas de API, estados, validações e textos legais.
+- Nomes de campos e fluxos de cadastro/login.
+
+Regra prática: se a mudança altera O QUE o usuário vê ou PODE FAZER, está fora
+do escopo. Se altera COMO aquilo aparece, está dentro.
+
+Antes de trocar qualquer componente, mapeie onde ele é usado e mantenha as
+mesmas props, dados e callbacks. Troque a pele, preserve o esqueleto.
+
+================================================================================
+3. PRINCÍPIOS DO VISUAL
+================================================================================
+
+- Água como fio condutor: petróleo, teal e ciano são as cores de base. O
+  laranja entra só para ação (botão principal) e para alerta.
+- Claro e arejado: fundo branco ou verde-água muito suave, muito respiro,
+  cantos bem arredondados, sombras longas e macias.
+- Dado primeiro: números grandes, com algarismos tabulares, e rótulos
+  pequenos e discretos acima deles.
+- Vivo, mas calmo: movimento contínuo e lento (ondas, pulso "ao vivo") e
+  entradas suaves. Nada pisca, nada chacoalha.
+- Um só sotaque de cor por bloco: se o card tem alerta, o laranja é o único
+  destaque; o resto fica neutro.
+
+================================================================================
+4. TOKENS
+================================================================================
+
+4.1 CORES (hex / rgb)
+
+Marca
+  brand-1  laranja    #fb6900  rgb(251,105,0)   ação e alerta (início do degradê)
+  brand-2  vermelho   #f63700  rgb(246,55,0)    ação e alerta (fim do degradê), texto de alerta
+  brand-3  petróleo   #004853  rgb(0,72,83)     base das linhas e sombras
+  brand-4  teal       #007e80  rgb(0,126,128)   água (fundo do reservatório), texto de destaque
+  brand-5  ciano      #00b9bd  rgb(0,185,189)   água (superfície), "ao vivo", ícones
+
+Texto sobre fundo claro
+  ink        #00252c   títulos e números
+  ink-soft   #456b72   parágrafos
+  ink-faint  #83999d   rótulos, legendas, eixos
+
+Superfícies claras
+  surface       #ffffff
+  surface-soft  #f2fafa   fundo de seção alternada, fundo interno de tanques e blocos
+  line          rgba(0,72,83,0.12)   todas as bordas e divisórias finas
+
+Superfícies escuras (áreas de destaque; não é "modo escuro" do app)
+  deep   #001b21   fundo principal escuro
+  deep-2 #002a32   variação
+  abyss  #001216   fundo mais profundo (rodapé)
+  Texto sobre escuro: branco; secundário branco 60–65%; terciário branco 40–55%.
+
+Degradês
+  Botão principal:      linear-gradient(100deg, #fb6900 0%, #f63700 100%)
+  Água (corpo):         linear-gradient(to top, #007e80 0%, #00b9bd 100%)
+  Ícone/chip de marca:  linear-gradient(to bottom right, #007e80, #00b9bd)
+  Texto destaque claro: linear-gradient(120deg, #007e80, #00b9bd) aplicado no texto
+  Texto destaque escuro: linear-gradient(120deg, #00b9bd, #8ef0f1) aplicado no texto
+  Barra de alerta:      linear-gradient(to top, #f63700, #fb6900)
+  Barra normal:         linear-gradient(to top, rgba(0,126,128,.8), rgba(0,185,189,.8))
+
+Transparências usadas com frequência
+  ciano 10%  rgba(0,185,189,.10)  fundo de chip/pill de marca
+  ciano 15%  rgba(0,185,189,.15)  fundo de pill de sucesso e do check
+  ciano 25%  rgba(0,185,189,.25)  anel de chip de ícone
+  laranja 10% rgba(251,105,0,.10) fundo de pill/ícone de alerta
+  laranja 30% rgba(251,105,0,.30) anel de pill de alerta
+
+4.2 TIPOGRAFIA
+
+  Fonte principal: Poppins (300, 400, 500, 600, 700).
+  Logotipo: "VIZ" em Black Ops One; "smart living" em Inter 300, caixa alta,
+  9px, espaçamento entre letras 0.28em, cor teal (ciano sobre escuro).
+
+  Escala (mobile → desktop)
+  Display/H1      42px → 68px, peso 600, altura de linha 1.05, tracking -0.03em
+  H2 de seção     30px → 48px, peso 600, altura 1.15, tracking -0.025em
+  H3 de bloco     30px → 36px (destaques) / 20–24px (cards), peso 600
+  Número grande   24–48px, peso 600, algarismos tabulares
+  Corpo grande    18px, altura 1.65, cor ink-soft
+  Corpo           16px, altura 1.6
+  Rótulo          12px (xs), cor ink-faint
+  Micro           10–11px, peso 500–600 (eixos, pills, horários)
+
+  Regras
+  - Todo número que muda (%, litros, m³, horas) usa algarismos tabulares
+    (font-variant-numeric: tabular-nums) para não "dançar" ao atualizar.
+  - Títulos com tracking negativo; rótulos pequenos nunca em negrito pesado.
+  - Destaque de uma parte do título com texto em degradê (ver 4.1), no máximo
+    um trecho por título.
+
+4.3 RAIOS DE BORDA
+
+  3px    topo das barras do gráfico
+  8px    ícones pequenos de arquivo
+  12px   campos, linhas de lista, chips de dia, ícones médios
+  16px   reservatório, mini telas, sub-cards dentro de painel, notificações
+  24px   cards de conteúdo
+  28px   painel principal (container de dados)
+  32px   cards grandes de destaque
+  9999px pills e botões
+
+4.4 SOMBRAS
+
+  Painel principal (card de dados sobre fundo claro):
+    0 1px 2px rgba(0,72,83,.05),
+    0 30px 60px -30px rgba(0,72,83,.35),
+    0 60px 120px -60px rgba(0,185,189,.35)
+    + borda 1px line
+  Card suave:
+    0 1px 2px rgba(0,72,83,.04), 0 18px 40px -28px rgba(0,72,83,.35)
+    fundo linear-gradient(155deg, #fff 0%, #f2fafa 100%) + borda 1px line
+  Notificação flutuante:
+    0 24px 60px -20px rgba(0,37,44,.45) + anel 1px line
+  Mini tela sobre fundo escuro:
+    0 24px 60px -28px rgba(0,0,0,.7)
+  Botão principal:
+    inset 0 1px 0 rgba(255,255,255,.25),
+    0 10px 24px -12px (vermelho #f63700 a 70%)
+  Chip de ícone com degradê:
+    0 12px 30px -12px #007e80
+
+  Sombras são sempre longas, deslocadas para baixo e com spread negativo.
+  Nunca use sombra curta e escura.
+
+4.5 ESPAÇAMENTO
+
+  Base de 4px. Padding de card: 24px (mobile) / 32px (desktop).
+  Padding de painel: 16–20px (mobile) / 24–28px (desktop).
+  Padding de sub-card e mini tela: 12–16px.
+  Espaço entre cards: 16–20px. Entre blocos de seção: 96–128px.
+  Margem lateral mínima no mobile: 16px.
+
+4.6 ÍCONES
+
+  Lucide (traço), espessura 1.75 em ícones grandes, 2–2.25 em pequenos,
+  3 nos checks dentro de círculos pequenos.
+  Ícone de card fica dentro de um chip 48×48, raio 16px, fundo ciano 10%,
+  anel interno ciano 25%, ícone ciano (sobre escuro) ou teal (sobre claro).
+
+================================================================================
+5. COMPONENTES
+================================================================================
+
+--------------------------------------------------------------------------------
+5.1 RESERVATÓRIO COM ONDAS (componente principal)
+--------------------------------------------------------------------------------
+
+O que é: um tanque vertical arredondado que mostra o nível de água como um
+corpo em degradê com duas ondas animadas na superfície. Ao aparecer na tela, a
+água sobe do fundo até o nível atual.
+
+Props
+  level   número de 0 a 100 (percentual do nível)
+  marks   booleano, liga as linhas de alerta (transbordo e nível baixo)
+  size    tamanho do tanque (ver tamanhos abaixo)
+
+Estrutura em camadas (de trás para frente)
+  1. CONTAINER
+     - retângulo vertical, raio 16px, overflow escondido (clip)
+     - fundo #f2fafa
+     - anel interno de 1px na cor line rgba(0,72,83,.12)
+  2. GRADUAÇÕES
+     - linhas horizontais tracejadas de 1px em 25%, 50% e 75% da altura
+     - cor petróleo a 10%: rgba(0,72,83,.10)
+     - ficam atrás da água (a água cobre as que estão abaixo do nível)
+  3. CORPO DA ÁGUA
+     - bloco ancorado no fundo, largura total, altura = level%
+     - degradê de baixo para cima: #007e80 → #00b9bd
+  4. ONDA DE TRÁS
+     - SVG preso ao topo do corpo da água
+     - cor ciano a 45%: rgba(0,185,189,.45)
+     - ciclo de 7s, linear, infinito
+  5. ONDA DA FRENTE
+     - mesmo SVG, cor ciano 100% (#00b9bd, igual ao topo do degradê, para a
+       onda se fundir ao corpo sem emenda)
+     - ciclo de 4s, linear, infinito
+     - as duas velocidades diferentes criam o efeito de profundidade
+  6. LINHAS DE ALERTA (só com marks = true)
+     - tracejado de 2px, laranja a 70%: rgba(251,105,0,.70)
+     - uma em 94% da altura (transbordo) e outra em 25% (nível baixo)
+     - ficam na frente da água
+
+A onda (geometria exata)
+  viewBox: 0 0 400 20
+  path:    M0 10 Q 50 0 100 10 T 200 10 T 300 10 T 400 10 V 20 H 0 Z
+  preserveAspectRatio: none
+  largura: 200% da largura do tanque
+  altura:  12px
+  posição: left 0; bottom = 100% - 1px do corpo da água
+           (o -1px sobrepõe a onda ao corpo e elimina a linha fina entre eles)
+
+  Por que funciona em loop perfeito: o path tem período de 200 unidades
+  (crista em 50, vale em 150) e se repete de 0–200 e de 200–400. Como o SVG
+  tem o dobro da largura do tanque, deslocar 50% (= 200 unidades) volta
+  exatamente ao mesmo desenho.
+
+Animação da onda
+  translateX de 0 até -50% da própria largura, linear, infinito.
+    onda de trás: 7s
+    onda da frente: 4s
+
+Animação de subida (entrada)
+  altura do corpo da água de 6% até level%, em 1.6s,
+  curva cubic-bezier(0.22, 1, 0.36, 1) (desacelera no fim),
+  dispara uma única vez quando o tanque entra na tela.
+  Quando o nível muda com dados novos, anime a altura entre o valor antigo e o
+  novo com a mesma curva (0.8–1.2s).
+
+Tamanhos
+  Compacto (cards de resumo):  40×96px no mobile, 56×112px no desktop
+  Grande (tela de detalhe):    112×256px no mobile, 144×288px no desktop
+  Proporção sempre vertical, entre 1:2 e 1:2.5.
+
+Acessibilidade
+  role="img" com rótulo "Reservatório com {level}% de água".
+  As ondas são decorativas (aria-hidden).
+  Com "reduzir movimento" ligado: sem subida (já nasce no nível) e ondas
+  paradas.
+
+Implementação de referência (web: React + Tailwind + Framer Motion)
+
+  function Wave({ className }) {
+    return (
+      <svg aria-hidden viewBox="0 0 400 20" preserveAspectRatio="none"
+           className={`absolute left-0 h-3 w-[200%] ${className}`}
+           style={{ bottom: "calc(100% - 1px)" }}>
+        <path d="M0 10 Q 50 0 100 10 T 200 10 T 300 10 T 400 10 V 20 H 0 Z"
+              fill="currentColor" />
+      </svg>
+    );
+  }
+
+  export function Tank({ level, marks = false, className = "" }) {
+    const reduce = useReducedMotion();
+    const height = `${level}%`;
+    return (
+      <div role="img" aria-label={`Reservatório com ${level}% de água`}
+           className={`relative overflow-hidden rounded-2xl bg-[#f2fafa]
+                       ring-1 ring-inset ring-[rgba(0,72,83,.12)] ${className}`}>
+        {[25, 50, 75].map((m) => (
+          <div key={m} style={{ bottom: `${m}%` }}
+               className="absolute inset-x-0 border-t border-dashed
+                          border-[rgba(0,72,83,.10)]" />
+        ))}
+        <motion.div className="absolute inset-x-0 bottom-0"
+          initial={reduce ? { height } : { height: "6%" }}
+          whileInView={{ height }} viewport={{ once: true }}
+          transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}>
+          <div className="absolute inset-0 bg-gradient-to-t
+                          from-[#007e80] to-[#00b9bd]" />
+          <Wave className="text-[#00b9bd]/45 animate-[wave_7s_linear_infinite]" />
+          <Wave className="text-[#00b9bd] animate-[wave_4s_linear_infinite]" />
+        </motion.div>
+        {marks && (
+          <>
+            <div style={{ bottom: "94%" }} className="absolute inset-x-0
+                 border-t-2 border-dashed border-[rgba(251,105,0,.7)]" />
+            <div style={{ bottom: "25%" }} className="absolute inset-x-0
+                 border-t-2 border-dashed border-[rgba(251,105,0,.7)]" />
+          </>
+        )}
+      </div>
+    );
+  }
+
+  CSS:
+  @keyframes wave { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important } }
+
+Se o app for React Native
+  - Container: View com overflow "hidden", borderRadius 16, fundo #f2fafa,
+    borderWidth 1 na cor line.
+  - Corpo: react-native-linear-gradient (ou expo-linear-gradient) com
+    colors ["#00b9bd", "#007e80"] de cima para baixo, altura animada com
+    Reanimated (withTiming, Easing.bezier(0.22, 1, 0.36, 1), 1600ms).
+  - Onda: react-native-svg com o mesmo viewBox e path, largura = 2 × largura
+    do tanque, posicionada com bottom = alturaDoCorpo - 1.
+  - Loop: translateX de 0 até -larguraDoTanque com
+    withRepeat(withTiming(..., { duration: 4000, easing: Easing.linear }), -1)
+    (7000ms na onda de trás). Rode na UI thread (Reanimated), nunca em
+    setInterval.
+  - Respeite AccessibilityInfo.isReduceMotionEnabled().
+
+Se o app for Flutter
+  - ClipRRect(radius 16) + Stack. Corpo: Container com LinearGradient
+    (bottomCenter #007e80 → topCenter #00b9bd) e AnimatedContainer para a
+    altura (Curves: Cubic(0.22, 1, 0.36, 1)).
+  - Onda: CustomPainter desenhando a mesma curva (quadráticas com período de
+    metade da largura do canvas), deslocada por um AnimationController em
+    repeat() de 4s e 7s.
+
+--------------------------------------------------------------------------------
+5.2 CARD DE RESERVATÓRIO (resumo, usado em dupla lado a lado)
+--------------------------------------------------------------------------------
+
+  Layout: linha com o tanque compacto à esquerda e a coluna de texto à direita,
+  espaço de 12px entre eles; as duas colunas esticam à mesma altura.
+  Card: raio 16px, anel 1px line, padding 12px (mobile) / 16px (desktop),
+  fundo branco.
+  Coluna de texto, distribuída de cima a baixo (space-between):
+    rótulo   "Reservatório superior"   12px, ink-faint
+             (no mobile, só "Superior", para caber)
+    valor    "82%"                     24px → 30px, peso 600, ink, tabular
+    detalhe  "16.400 de 20.000 L"      11px, ink-soft, tabular
+             (no mobile, só "16.400 L")
+  Números em formato pt-BR (ponto de milhar, vírgula decimal).
+
+--------------------------------------------------------------------------------
+5.3 PAINEL DE DETALHE DO RESERVATÓRIO
+--------------------------------------------------------------------------------
+
+  Container: painel principal (raio 28px, sombra de painel, padding 20/28px).
+  Cabeçalho: nome do reservatório (14px, peso 600) à esquerda; indicador
+  "Ao vivo" (5.6) à direita.
+  Corpo: tanque grande com marks = true à esquerda; à direita, uma coluna
+  da mesma altura com três textos posicionados na altura exata do que
+  descrevem:
+    - "ALERTA DE TRANSBORDO" alinhado à linha de 94%
+    - o nível atual ("61%", 36px → 48px, peso 600) + litros ("18.300 de
+      30.000 L", 14px ink-soft) centralizados na altura do nível
+    - "ALERTA DE NÍVEL BAIXO" alinhado à linha de 25%
+    Os dois rótulos de alerta: 11px, peso 600, caixa alta, tracking 0.05em,
+    cor #f63700.
+  Rodapé: bloco "Nível nas últimas 24 h" (fundo #f2fafa, raio 16px,
+  padding 16px) com um gráfico de área:
+    - linha teal #007e80, 2px, cantos arredondados
+    - área preenchida com degradê vertical ciano 35% → 0%
+    - linha tracejada laranja 60% (traço 4, espaço 4) no nível de alerta baixo
+    - altura 64px, largura total
+
+--------------------------------------------------------------------------------
+5.4 GRÁFICO DE CONSUMO POR HORA (hidrômetro)
+--------------------------------------------------------------------------------
+
+  24 barras verticais (0h a 23h), largura igual, 3px de espaço entre elas.
+  Topo das barras com raio 3px; altura mínima de 4% para a barra nunca sumir.
+  Cores:
+    normal: degradê de baixo para cima teal 80% → ciano 80%
+    fora do padrão: degradê #f63700 → #fb6900
+  Entrada: cada barra cresce de scaleY 0 a 1 a partir da base, em 0.6s,
+  atraso de 25ms por barra (efeito cascata da esquerda para a direita).
+  Eixo: rótulos 0h, 6h, 12h, 18h, 23h em 10px, peso 500, ink-faint, tabular.
+  Marcação de anomalia: um colchete (bordas esquerda, direita e topo de 2px,
+  laranja 60%, 8px de altura, raio 6px no topo) sobre as barras laranja, 6px
+  acima da mais alta; acima dele, um pill branco com texto #f63700, anel
+  laranja 30% e sombra pequena ("Madrugada fora do padrão").
+  Cartões de resumo abaixo (grade de 2):
+    neutro: fundo #f2fafa, raio 16px, rótulo 12px + valor 20px peso 600
+    alerta: fundo laranja 7%, anel interno laranja 15%, rótulo em #f63700
+
+--------------------------------------------------------------------------------
+5.5 NOTIFICAÇÃO DE ALERTA (toast / card de alerta)
+--------------------------------------------------------------------------------
+
+  Largura ~280px, raio 16px, padding 16px, fundo branco 95% com desfoque de
+  fundo (backdrop blur), anel 1px line, sombra de notificação.
+  Linha: ícone à esquerda em quadrado 36×36, raio 12px, fundo laranja 10%,
+  ícone de triângulo de alerta #f63700 (traço 2). À direita:
+    topo: "VIZ" no logotipo (11px) e horário ("03:12", 11px, tabular) nas
+          pontas
+    título: 14px, peso 600, ink ("Água correndo de madrugada")
+    texto: 12px, ink-soft, altura 1.6
+  Quando flutua sobre um painel: animação de flutuação vertical de 0 a -10px,
+  7s, ease-in-out, infinita.
+
+--------------------------------------------------------------------------------
+5.6 INDICADOR "AO VIVO"
+--------------------------------------------------------------------------------
+
+  Ponto de 8px na cor ciano + um anel da mesma cor atrás que pulsa:
+  scale 0.6 → 2.2 e opacidade 0.6 → 0, em 2.4s, ease-out, infinito.
+  Dentro de um pill: fundo ciano 10%, texto teal 12px peso 600, 8px de
+  espaço entre ponto e texto ("Ao vivo").
+
+--------------------------------------------------------------------------------
+5.7 PILLS DE STATUS
+--------------------------------------------------------------------------------
+
+  Todos: raio total, padding 4px 10px, 11px, peso 600.
+  Sucesso/seu:   fundo ciano 15%, texto teal, ícone de check opcional
+  Disponível:    sem fundo, anel interno teal 30%, texto teal
+  Neutro/ocupado: fundo #f2fafa, texto ink-faint
+  Alerta/pendente: fundo laranja 10%, texto #f63700, ponto de 6px opcional
+  Contador de alerta ("1 alerta"): igual ao de alerta, com ponto vermelho.
+
+--------------------------------------------------------------------------------
+5.8 BOTÕES
+--------------------------------------------------------------------------------
+
+  Principal: formato pílula, degradê laranja → vermelho (100deg), texto
+  branco peso 600, brilho interno de 1px no topo e sombra avermelhada.
+  Hover/press: brilho +8% e sobe 1px. Foco: contorno 2px ciano com 3px de
+  afastamento. Desabilitado: opacidade 40%, sem hover.
+  Tamanhos: grande 16px texto, padding 16px 28px; médio 14px, padding 10px
+  20px. Ícone de seta à direita que desliza 2px no hover.
+  Secundário: pílula branca, borda 1px line, texto ink peso 600; hover com
+  fundo #f2fafa e borda teal 40%.
+  Sobre fundo escuro: pílula com fundo branco 5%, borda branca 15%, texto
+  branco; hover fundo 10% e borda 30%.
+  No mobile, botões de ação de uma seção ocupam a largura toda.
+
+--------------------------------------------------------------------------------
+5.9 CARDS
+--------------------------------------------------------------------------------
+
+  Card claro: raio 24px, padding 24/32px, fundo branco ou degradê suave
+  (branco → #f2fafa), borda 1px line, sombra de card suave.
+  Card sobre escuro ("vidro"): raio 24px, borda branca 10%, fundo branco 4%;
+  hover borda 20% e fundo 6%. Título branco, texto branco 60%.
+  Cabeçalho de card: chip de ícone (4.6) + título 20px peso 600 + texto.
+  Lista de benefícios: círculo de 24px com degradê teal→ciano e check branco
+  (traço 3), texto ink 16px; 16–20px entre itens.
+
+--------------------------------------------------------------------------------
+5.10 MINI TELAS E LISTAS (gestão: reservas, comunicados, manutenções...)
+--------------------------------------------------------------------------------
+
+  Superfície: branca, raio 16px, padding 16px.
+  Linha de lista: borda 1px line, raio 12px, padding 10px 12px; título 14px
+  peso 600, detalhe 12px ink-faint; pill de status à direita.
+  Seletor de dias: grade de chips com raio 12px; chip normal fundo #f2fafa e
+  texto ink-soft (dia da semana 10px caixa alta, data 16px peso 600); chip
+  selecionado com degradê teal→ciano, texto branco e sombra teal.
+  Linha de tarefa: ícone de estado em círculo de 20px à esquerda
+    concluída: degradê teal→ciano com check branco
+    agendada: fundo #f2fafa, anel line, relógio ink-soft
+    em andamento: fundo laranja 10% com ponto laranja de 8px
+  Linha de documento: ícone em quadrado 32px, raio 8px, fundo ciano 10%,
+  ícone teal; nome 14px peso 500; tipo 11px ink-faint.
+  Busca: fundo #f2fafa, raio 12px, ícone de lupa e texto 12px ink-faint.
+  Separadores: 1px line, com 12px de espaço acima e abaixo.
+
+--------------------------------------------------------------------------------
+5.11 FORMULÁRIOS E MODAIS
+--------------------------------------------------------------------------------
+
+  Campo: raio 12px, borda 1px line, padding 14px 16px, placeholder
+  ink-faint. Foco: borda teal 60% e anel externo de 4px ciano 15%.
+  Rótulo acima do campo: 14px peso 500 ink, 8px de espaço.
+  Escolha única (tipo "segmented"): grade de 2 opções, raio 12px, borda line;
+  selecionada com borda teal, fundo ciano 10%, texto teal peso 600.
+  Modal: no mobile vira "bottom sheet" (encostado embaixo, raio 28px só no
+  topo); no desktop, centralizado, raio 28px. Fundo por trás: #001b21 a 70%
+  com desfoque. Botão de fechar: 36px, circular, hover #f2fafa.
+  Estado de sucesso: círculo de 56px com degradê teal→ciano e check branco.
+
+--------------------------------------------------------------------------------
+5.12 FUNDOS DECORATIVOS (use com parcimônia nas telas do app)
+--------------------------------------------------------------------------------
+
+  Malha: linhas de 1px a cada 64px, petróleo 5.5% (claro) ou branco 5%
+  (escuro), com máscara radial para desaparecer nas bordas.
+  Brilho: círculo grande com gradiente radial ciano 16–22% → transparente e
+  desfoque de 40–60px, atrás de painéis importantes.
+  No app, prefira usar só em telas de destaque (painel inicial, tela de água),
+  nunca atrás de listas longas.
+
+================================================================================
+6. MOVIMENTO
+================================================================================
+
+  Curva padrão: cubic-bezier(0.22, 1, 0.36, 1).
+  Entrada de blocos: opacidade 0 → 1 e deslocamento de 24px para cima → 0,
+  em 0.7s; itens em grade entram em cascata com 80–100ms entre eles.
+  Contínuas (sempre lentas): ondas 4s/7s, "ao vivo" 2.4s, flutuação 7s.
+  Dados novos: anime a transição do valor antigo para o novo; não pisque.
+  Transições de estado (hover/press): 200ms.
+  Com "reduzir movimento" ativo: desligue ondas, pulsos, flutuação, subida e
+  cascata. Tudo aparece direto no estado final.
+
+================================================================================
+7. ACESSIBILIDADE
+================================================================================
+
+  - Contraste mínimo AA: texto de corpo em ink-soft sobre branco; nunca
+    ink-faint para textos longos.
+  - Estado nunca só por cor: pill de alerta sempre com texto ("Em
+    andamento", "1 alerta"), barra laranja sempre com marcação/legenda.
+  - Gráficos e tanques com descrição textual para leitores de tela.
+  - Alvos de toque de no mínimo 44×44px.
+  - Foco visível em todo elemento interativo (contorno ciano).
+
+================================================================================
+8. COMO APLICAR (ordem sugerida)
+================================================================================
+
+  1. Crie os tokens (cores, tipografia, raios, sombras, curvas de animação)
+     no sistema de tema do app. Nada de cor solta em componente.
+  2. Construa o componente Reservatório (5.1) isolado, com uma tela de teste
+     mostrando níveis 0, 25, 61, 82, 100 e marks ligado/desligado.
+  3. Substitua a visualização de nível em todas as telas de água pelo novo
+     componente, mantendo os mesmos dados e comportamentos.
+  4. Aplique o card de reservatório (5.2) e o painel de detalhe (5.3).
+  5. Atualize o gráfico do hidrômetro (5.4) e os alertas (5.5, 5.6).
+  6. Troque botões, pills, cards, listas e campos (5.7 a 5.11) em todo o app.
+  7. Adicione o movimento (6) por último e valide o modo "reduzir movimento".
+
+Critérios de aceite
+  [ ] Nenhuma rota, menu, permissão ou fluxo foi alterado.
+  [ ] Todas as telas que mostravam nível de água usam o Reservatório com ondas.
+  [ ] A onda roda em loop sem "pulo" visível e sem linha entre onda e corpo.
+  [ ] A água sobe na primeira exibição e anima quando o nível muda.
+  [ ] Números usam algarismos tabulares e formato pt-BR.
+  [ ] Laranja aparece apenas em ação principal e em alerta.
+  [ ] Todas as cores vêm dos tokens.
+  [ ] Animações pausam com "reduzir movimento".
+  [ ] A animação da onda não derruba a taxa de quadros em aparelhos modestos
+      (rodar na thread de UI/compositor, só com transform).

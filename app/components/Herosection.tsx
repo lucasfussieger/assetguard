@@ -1,69 +1,91 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 
 import { QuoteButton } from "./quote-form";
+import Reveal from "./reveal";
+import { DashboardPreview, LeakAlert } from "./viz-visuals";
 
-const ctaClass =
-  "group inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand-1 to-brand-2 px-10 py-3.5 text-base font-semibold text-white hover:brightness-110 transition-all sm:min-w-[220px]";
+const proofs = [
+  "Instalação feita pela equipe Viz",
+  "Para condomínios e construtoras",
+];
 
 export default function Herosection() {
   return (
-    <section className="relative overflow-hidden rounded-b-4xl bg-white pt-12 pb-24 sm:pt-16 sm:pb-28">
-      {/* Calor laranja discreto na base */}
+    <section
+      aria-labelledby="hero-title"
+      className="relative overflow-hidden bg-white"
+    >
+      {/* Malha e luzes de fundo */}
+      <div className="grid-faint mask-fade-y absolute inset-0 pointer-events-none" />
       <div
-        className="absolute -bottom-[30vw] right-[8vw] w-[45vw] h-[45vw] rounded-full pointer-events-none"
+        className="absolute -top-40 right-[-10%] h-[42rem] w-[42rem] rounded-full pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, color-mix(in srgb, var(--brand-1) 16%, transparent) 0%, transparent 68%)",
-          filter: "blur(90px)",
+            "radial-gradient(circle, color-mix(in srgb, var(--brand-5) 22%, transparent) 0%, transparent 65%)",
+          filter: "blur(40px)",
+        }}
+      />
+      <div
+        className="absolute -bottom-56 left-[-12%] h-[34rem] w-[34rem] rounded-full pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle, color-mix(in srgb, var(--brand-1) 12%, transparent) 0%, transparent 65%)",
+          filter: "blur(60px)",
         }}
       />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.1] tracking-tight text-ink">
-            Conectamos seu edifício à{" "}
-            <span className="text-shimmer-brand">tecnologia</span>
+      <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-4 pt-14 pb-20 sm:px-6 sm:pt-20 sm:pb-28 lg:grid-cols-[1.05fr_1fr] lg:gap-12 lg:px-8 lg:pt-24">
+        <div>
+          <h1
+            id="hero-title"
+            className="text-[2.6rem] font-semibold leading-[1.05] tracking-[-0.03em] text-ink sm:text-6xl lg:text-[4.25rem]"
+          >
+            Veja a água do seu prédio{" "}
+            <span className="text-shimmer-brand">em tempo real.</span>
           </h1>
 
-          <p className="mt-6 max-w-xl text-base text-ink-soft leading-relaxed">
-            A Viz reúne software e hardware em um único sistema: manutenções,
-            reservas, comunicados, documentos e o monitoramento de recursos
-            hídricos.
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">
+            A Viz mede o nível dos reservatórios e o consumo do hidrômetro e
+            avisa no celular quando algo sai do normal. No mesmo app, cuida da
+            gestão do condomínio.
           </p>
 
-          <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center w-full sm:w-auto">
-            <a
-              href="#condominio"
-              className={ctaClass}
-            >
-              Condomínios
-              <ArrowUpRight
-                size={20}
-                strokeWidth={2}
-                className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              />
-            </a>
-            <a
-              href="#construtora"
-              className={ctaClass}
-            >
-              Construtoras
-              <ArrowUpRight
-                size={20}
-                strokeWidth={2}
-                className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              />
-            </a>
-            <QuoteButton className={ctaClass}>
-              Fazer orçamento
-              <ArrowUpRight
-                size={20}
-                strokeWidth={2}
-                className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <QuoteButton className="btn-primary group px-7 py-4 text-base">
+              Pedir orçamento
+              <ArrowRight
+                size={18}
+                strokeWidth={2.25}
+                className="transition-transform group-hover:translate-x-0.5"
               />
             </QuoteButton>
+            <a
+              href="#como-funciona"
+              className="btn-ghost border border-line bg-white px-7 py-4 text-base text-ink hover:border-brand-4/40 hover:bg-surface-soft"
+            >
+              Como funciona
+            </a>
           </div>
+
+          <ul className="mt-8 flex flex-col gap-2.5 sm:flex-row sm:gap-6">
+            {proofs.map((proof) => (
+              <li
+                key={proof}
+                className="flex items-center gap-2 text-sm text-ink-soft"
+              >
+                <span className="grid size-5 place-items-center rounded-full bg-brand-5/15 text-brand-4">
+                  <Check size={12} strokeWidth={3} />
+                </span>
+                {proof}
+              </li>
+            ))}
+          </ul>
         </div>
+
+        <Reveal delay={0.15} className="relative mx-auto w-full max-w-lg lg:max-w-none">
+          <DashboardPreview />
+          <LeakAlert className="animate-float relative mx-auto -mt-6 sm:absolute sm:-bottom-16 sm:-right-8 sm:mt-0 lg:-right-6" />
+        </Reveal>
       </div>
     </section>
   );

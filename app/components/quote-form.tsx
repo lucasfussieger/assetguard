@@ -7,9 +7,13 @@ import {
   useEffect,
   useState,
 } from "react";
-import { X } from "lucide-react";
+import { ArrowRight, Check, X } from "lucide-react";
 
-type QuoteContextValue = { open: () => void };
+import { whatsappLink } from "../lib/whatsapp";
+
+type Tipo = "" | "condominio" | "construtora";
+
+type QuoteContextValue = { open: (tipo?: Tipo) => void };
 
 const QuoteContext = createContext<QuoteContextValue | null>(null);
 
@@ -24,7 +28,7 @@ function useQuote() {
 type FormState = {
   nome: string;
   telefone: string;
-  tipo: "" | "condominio" | "construtora";
+  tipo: Tipo;
   software: "" | "sim" | "nao";
 };
 
@@ -35,17 +39,47 @@ const emptyForm: FormState = {
   software: "",
 };
 
+const tipoLabel = { condominio: "Condomínio", construtora: "Construtora" };
+
+/** (47) 99999-9999 enquanto a pessoa digita. */
+function formatPhone(value: string) {
+  const digits = value.replace(/\D/g, "").slice(0, 11);
+  if (digits.length <= 2) return digits.length ? `(${digits}` : "";
+  if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  if (digits.length <= 10)
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+}
+
+function buildMessage(form: FormState) {
+  return [
+    "Olá! Quero um orçamento da Viz.",
+    "",
+    `Nome: ${form.nome.trim()}`,
+    `Telefone: ${form.telefone}`,
+    `Perfil: ${form.tipo ? tipoLabel[form.tipo] : "-"}`,
+    `Já usa software de gestão: ${form.software === "sim" ? "Sim" : "Não"}`,
+  ].join("\n");
+}
+
 export function QuoteButton({
   children,
   className,
+  tipo,
 }: {
   children: React.ReactNode;
   className?: string;
+  tipo?: Tipo;
 }) {
   const { open } = useQuote();
 
   return (
-    <button type="button" onClick={open} className={className}>
+    <button
+      type="button"
+      onClick={() => open(tipo)}
+      className={className}
+      aria-haspopup="dialog"
+    >
       {children}
     </button>
   );
@@ -53,12 +87,12 @@ export function QuoteButton({
 
 export function QuoteProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [sentLink, setSentLink] = useState<string | null>(null);
   const [form, setForm] = useState<FormState>(emptyForm);
 
-  const open = useCallback(() => {
-    setForm(emptyForm);
-    setSubmitted(false);
+  const open = useCallback((tipo: Tipo = "") => {
+    setForm({ ...emptyForm, tipo });
+    setSentLink(null);
     setIsOpen(true);
   }, []);
 
@@ -82,9 +116,11 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
 
   const isComplete =
     form.nome.trim() !== "" &&
-    form.telefone.trim() !== "" &&
+    form.telefone.replace(/\D/g, "").length >= 10 &&
     form.tipo !== "" &&
     form.software !== "";
+
+  const firstName = form.nome.trim().split(/\s+/)[0];
 
   return (
     <QuoteContext.Provider value={{ open }}>
@@ -92,7 +128,7 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-end justify-center bg-deep/70 p-0 backdrop-blur-sm sm:items-center sm:p-4"
           onClick={close}
         >
           <div
@@ -100,33 +136,44 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
             aria-modal="true"
             aria-labelledby="quote-title"
             onClick={(event) => event.stopPropagation()}
-            className="relative w-full max-w-md max-h-[90vh] overflow-y-auto rounded-lg bg-white p-8"
+            className="relative max-h-[92vh] w-full overflow-y-auto rounded-t-[1.75rem] bg-white p-7 shadow-2xl sm:max-w-md sm:rounded-[1.75rem] sm:p-9"
           >
             <button
               type="button"
               onClick={close}
               aria-label="Fechar"
-              className="absolute top-4 right-4 text-ink-faint hover:text-ink transition-colors"
+              className="absolute right-4 top-4 grid size-9 place-items-center rounded-full text-ink-faint transition-colors hover:bg-surface-soft hover:text-ink"
             >
               <X size={20} strokeWidth={2} />
             </button>
 
-            {submitted ? (
-              <div className="text-center py-6">
+            {sentLink ? (
+              <div className="py-4 text-center">
+                <span className="mx-auto grid size-14 place-items-center rounded-full bg-gradient-to-br from-brand-4 to-brand-5 text-white">
+                  <Check size={28} strokeWidth={2.5} />
+                </span>
                 <h2
                   id="quote-title"
-                  className="text-2xl font-semibold text-ink"
+                  className="mt-6 text-2xl font-semibold text-ink"
                 >
-                  Obrigado pelo contato
+                  Pronto, {firstName}!
                 </h2>
-                <p className="mt-3 text-ink-soft leading-relaxed">
-                  Recebemos seus dados e nossa equipe entra em contato para
-                  apresentar a proposta para o seu empreendimento.
+                <p className="mt-3 leading-relaxed text-ink-soft">
+                  Abrimos o WhatsApp com os seus dados. Envie a mensagem e a
+                  nossa equipe responde com a proposta.
                 </p>
+                <a
+                  href={sentLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary mt-8 w-full px-7 py-3.5 text-base"
+                >
+                  Abrir o WhatsApp de novo
+                </a>
                 <button
                   type="button"
                   onClick={close}
-                  className="mt-8 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-brand-1 to-brand-2 px-7 py-3 text-base font-semibold text-white hover:brightness-110 transition-all"
+                  className="mt-3 w-full rounded-full py-3 text-sm font-semibold text-ink-soft transition-colors hover:text-ink"
                 >
                   Fechar
                 </button>
@@ -135,26 +182,30 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
               <form
                 onSubmit={(event) => {
                   event.preventDefault();
-                  setSubmitted(true);
+                  if (!isComplete) return;
+                  const link = whatsappLink(buildMessage(form));
+                  window.open(link, "_blank", "noopener,noreferrer");
+                  setSentLink(link);
                 }}
                 className="space-y-5"
               >
-                <div>
+                <div className="pr-8">
                   <h2
                     id="quote-title"
-                    className="text-2xl font-semibold text-ink"
+                    className="text-2xl font-semibold tracking-tight text-ink"
                   >
-                    Solicite seu orçamento
+                    Peça seu orçamento
                   </h2>
-                  <p className="mt-1 text-sm text-ink-soft">
-                    Preencha os dados abaixo e entraremos em contato.
+                  <p className="mt-1.5 text-sm text-ink-soft">
+                    Quatro perguntas rápidas. Você recebe a proposta pelo
+                    WhatsApp.
                   </p>
                 </div>
 
                 <div>
                   <label
                     htmlFor="quote-nome"
-                    className="block text-sm font-medium text-ink mb-2"
+                    className="mb-2 block text-sm font-medium text-ink"
                   >
                     Nome
                   </label>
@@ -162,13 +213,14 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
                     id="quote-nome"
                     name="nome"
                     type="text"
+                    autoComplete="name"
                     required
                     autoFocus
                     value={form.nome}
                     onChange={(event) =>
                       setForm({ ...form, nome: event.target.value })
                     }
-                    placeholder="Seu nome completo"
+                    placeholder="Seu nome"
                     className={inputClass}
                   />
                 </div>
@@ -176,18 +228,23 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
                 <div>
                   <label
                     htmlFor="quote-telefone"
-                    className="block text-sm font-medium text-ink mb-2"
+                    className="mb-2 block text-sm font-medium text-ink"
                   >
-                    Telefone
+                    WhatsApp
                   </label>
                   <input
                     id="quote-telefone"
                     name="telefone"
                     type="tel"
+                    inputMode="tel"
+                    autoComplete="tel-national"
                     required
                     value={form.telefone}
                     onChange={(event) =>
-                      setForm({ ...form, telefone: event.target.value })
+                      setForm({
+                        ...form,
+                        telefone: formatPhone(event.target.value),
+                      })
                     }
                     placeholder="(47) 99999-9999"
                     className={inputClass}
@@ -195,11 +252,11 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
                 </div>
 
                 <ChoiceGroup
-                  label="Tipo da solução"
+                  label="Você fala por"
                   name="tipo"
                   value={form.tipo}
                   onChange={(value) =>
-                    setForm({ ...form, tipo: value as FormState["tipo"] })
+                    setForm({ ...form, tipo: value as Tipo })
                   }
                   options={[
                     { value: "condominio", label: "Condomínio" },
@@ -208,7 +265,7 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
                 />
 
                 <ChoiceGroup
-                  label="Já usa algum software de gestão do empreendimento?"
+                  label="O prédio já usa algum software de gestão?"
                   name="software"
                   value={form.software}
                   onChange={(value) =>
@@ -226,9 +283,14 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
                 <button
                   type="submit"
                   disabled={!isComplete}
-                  className="w-full rounded-full bg-gradient-to-r from-brand-1 to-brand-2 py-3.5 text-base font-semibold text-white hover:brightness-110 transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:brightness-100"
+                  className="btn-primary group w-full px-7 py-4 text-base disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:transform-none disabled:hover:brightness-100"
                 >
-                  Enviar
+                  Enviar pelo WhatsApp
+                  <ArrowRight
+                    size={18}
+                    strokeWidth={2.25}
+                    className="transition-transform group-hover:translate-x-0.5"
+                  />
                 </button>
               </form>
             )}
@@ -240,7 +302,7 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
 }
 
 const inputClass =
-  "w-full bg-white border border-line rounded-lg px-4 py-3 text-ink placeholder:text-ink-faint focus:outline-none focus:border-brand-4/60 focus:ring-2 focus:ring-brand-5/25 transition-colors";
+  "w-full rounded-xl border border-line bg-white px-4 py-3.5 text-ink placeholder:text-ink-faint transition-colors focus:border-brand-4/60 focus:outline-none focus:ring-4 focus:ring-brand-5/15";
 
 function ChoiceGroup({
   label,
@@ -257,7 +319,7 @@ function ChoiceGroup({
 }) {
   return (
     <fieldset>
-      <legend className="text-sm font-medium text-ink mb-2">{label}</legend>
+      <legend className="mb-2 text-sm font-medium text-ink">{label}</legend>
       <div className="grid grid-cols-2 gap-2">
         {options.map((option) => {
           const selected = value === option.value;
@@ -265,9 +327,9 @@ function ChoiceGroup({
           return (
             <label
               key={option.value}
-              className={`cursor-pointer rounded-lg border px-4 py-2.5 text-sm text-center transition-colors ${
+              className={`cursor-pointer rounded-xl border px-4 py-3 text-center text-sm transition-colors has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-brand-5/20 ${
                 selected
-                  ? "border-brand-4 bg-brand-5/10 text-brand-4 font-medium"
+                  ? "border-brand-4 bg-brand-5/10 font-semibold text-brand-4"
                   : "border-line text-ink-soft hover:border-brand-5/50"
               }`}
             >

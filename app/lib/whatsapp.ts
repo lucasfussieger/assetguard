@@ -1,7 +1,12 @@
-const PHONE = "5547999346074";
-const MESSAGE =
-  "ola, tudo certo? gostaria de fazer um orçamento da Viz para o meu condomínio";
+import { CONTACT_PHONE } from "./site";
 
-export const WHATSAPP_URL = `https://wa.me/${PHONE}?text=${encodeURIComponent(
-  MESSAGE
-)}`;
+const PHONE = CONTACT_PHONE.replace(/\D/g, "");
+
+const DEFAULT_MESSAGE =
+  "Olá! Quero saber mais sobre a Viz para o meu prédio.";
+
+export function whatsappLink(message: string = DEFAULT_MESSAGE) {
+  return `https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`;
+}
+
+export const WHATSAPP_URL = whatsappLink();

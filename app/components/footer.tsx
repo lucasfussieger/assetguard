@@ -1,45 +1,62 @@
+import { WHATSAPP_URL } from "../lib/whatsapp";
+import { Wordmark } from "./header";
 import { QuoteButton } from "./quote-form";
 
 const links = [
-  { href: "#condominio", label: "Condomínios" },
-  { href: "#construtora", label: "Construtoras" },
-  { href: "#missao", label: "Nosso compromisso" },
+  { href: "#solucao", label: "Monitoramento" },
+  { href: "#gestao", label: "Gestão" },
+  { href: "#para-quem", label: "Para quem" },
+  { href: "#duvidas", label: "Dúvidas" },
 ];
 
 export default function Footer() {
   return (
-    <footer className="bg-zinc-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
-        <div className="flex items-baseline gap-2.5">
-          <span className="font-wordmark text-xl text-white">VIZ</span>
-          <span className="font-tagline text-[10px] font-light uppercase tracking-[0.25em] text-brand-5">
-            smart living
-          </span>
+    <footer className="bg-abyss">
+      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 pt-6 pb-14 sm:px-6 md:flex-row md:items-start md:justify-between lg:px-8">
+        <div className="max-w-xs">
+          <Wordmark tone="light" />
+          <p className="mt-5 text-sm leading-relaxed text-white/55">
+            Smart living para condomínios: a água do prédio em tempo real e a
+            gestão do dia a dia no mesmo app.
+          </p>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm text-white/60 hover:text-white transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
-          <QuoteButton className="text-sm font-semibold text-brand-1 hover:text-brand-2 transition-colors">
-            Fazer orçamento
-          </QuoteButton>
-        </div>
+        <nav aria-label="Rodapé">
+          <ul className="flex flex-col gap-3 sm:flex-row sm:gap-8">
+            {links.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  className="text-sm text-white/60 transition-colors hover:text-white"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+            <li>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-white/60 transition-colors hover:text-white"
+              >
+                WhatsApp
+              </a>
+            </li>
+            <li>
+              <QuoteButton className="text-sm font-semibold text-brand-1 transition-colors hover:text-brand-2">
+                Pedir orçamento
+              </QuoteButton>
+            </li>
+          </ul>
+        </nav>
       </div>
 
       <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
-          <p className="text-xs text-white/40 text-center">
-            © {new Date().getFullYear()} Viz smart living. Todos os direitos
-            reservados.
-          </p>
-        </div>
+        <p className="mx-auto max-w-6xl px-4 py-6 text-xs text-white/40 sm:px-6 lg:px-8">
+          © {new Date().getFullYear()} Viz smart living. Todos os direitos
+          reservados.
+        </p>
       </div>
     </footer>
   );
