@@ -60,43 +60,42 @@ export const features = [
   },
 ] as const;
 
-/** Gestão do dia a dia do condomínio. */
+/** Gestão do dia a dia do condomínio: primeiro o que o morador usa, depois o síndico. */
 export const modules = [
   {
     id: "reservas",
-    name: "Reserva de áreas",
+    name: "Reservas",
     description:
-      "O morador vê os horários livres e reserva o salão de festas ou a churrasqueira pelo app. O caderno da portaria se aposenta.",
-  },
-  {
-    id: "comunicados",
-    name: "Comunicados",
-    description:
-      "O aviso chega no celular de todos os moradores e fica registrado. Ninguém fica sem saber.",
-  },
-  {
-    id: "manutencoes",
-    name: "Gestão de manutenções",
-    description:
-      "Chamados, prazos e histórico de cada manutenção do prédio. O síndico sabe o que foi feito e o que vem pela frente.",
+      "O morador vê os horários livres e reserva o salão de festas ou a churrasqueira pelo app.",
   },
   {
     id: "boletos",
     name: "Boletos",
     description:
-      "O boleto do condomínio fica no app. O morador copia o código de barras na hora de pagar, sem pedir a segunda via à administradora.",
-  },
-  {
-    id: "documentos",
-    name: "Documentos",
-    description:
-      "Atas, regimento interno e contratos em um só lugar, para consultar quando precisar.",
+      "O morador abre o boleto do condomínio no app e copia o código de barras para pagar.",
   },
   {
     id: "encomendas",
     name: "Encomendas",
     description:
-      "A portaria registra a chegada e o morador é avisado na hora, sem interfone e sem bilhete.",
+      "A portaria registra a encomenda e o morador recebe um aviso no celular.",
+  },
+  {
+    id: "comunicados",
+    name: "Comunicados",
+    description: "O síndico manda avisos para todos os moradores pelo app.",
+  },
+  {
+    id: "manutencoes",
+    name: "Manutenções",
+    description:
+      "O síndico registra as manutenções do prédio e acompanha o que está agendado e o que já foi feito.",
+  },
+  {
+    id: "documentos",
+    name: "Documentos",
+    description:
+      "Atas, regimento interno e contratos ficam guardados no app para consulta.",
   },
 ] as const;
 
@@ -146,7 +145,7 @@ export const faq = [
   {
     question: "O que a Viz faz?",
     answer:
-      "Monitora a água do prédio e cuida da gestão do condomínio no mesmo app. Os sensores medem o nível dos reservatórios e o consumo do hidrômetro. O app organiza reservas, comunicados, manutenções, boletos, documentos e encomendas.",
+      "Monitora a água do prédio e cuida da gestão do condomínio no mesmo app. Os sensores medem o nível dos reservatórios e o consumo do hidrômetro. O app organiza reservas, boletos, encomendas, comunicados, manutenções e documentos.",
   },
   {
     question: "Como a Viz ajuda a descobrir vazamentos?",

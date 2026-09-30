@@ -28,7 +28,7 @@ export const SITE_DESCRIPTION =
 
 /** Definição em uma frase, para JSON-LD e llms.txt. */
 export const SITE_SUMMARY =
-  "A Viz é uma empresa de smart living para condomínios. Mede o nível dos reservatórios e o consumo do hidrômetro em tempo real, avisa no celular quando algo sai do normal e, no mesmo app, cuida da gestão do condomínio: reservas, comunicados, manutenções, boletos, documentos e encomendas.";
+  "A Viz é uma empresa de smart living para condomínios. Mede o nível dos reservatórios e o consumo do hidrômetro em tempo real, avisa no celular quando algo sai do normal e, no mesmo app, cuida da gestão do condomínio: reservas, boletos, encomendas, comunicados, manutenções e documentos.";
 
 export const SLOGAN = "Veja a água do seu prédio em tempo real.";
 

@@ -47,8 +47,6 @@ A água e a rotina do prédio ficam no mesmo app. Síndico, portaria e moradores
 
 ${modules.map((item) => `### ${item.name}\n\n${item.description}`).join("\n\n")}
 
-Além desses, a Viz tem outros módulos para a rotina do prédio, apresentados na proposta.
-
 ## Como funciona
 
 ${steps

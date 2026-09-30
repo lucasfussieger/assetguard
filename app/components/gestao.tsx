@@ -47,7 +47,6 @@ const days = [
 const slots = [
   { area: "Salão de festas", time: "19h às 23h", status: "mine" },
   { area: "Churrasqueira", time: "12h às 16h", status: "free" },
-  { area: "Quadra", time: "8h às 10h", status: "busy" },
 ] as const;
 
 function ReservasScreen() {
@@ -98,11 +97,6 @@ function ReservasScreen() {
             {slot.status === "free" && (
               <span className="shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold text-brand-4 ring-1 ring-inset ring-brand-4/30">
                 Livre
-              </span>
-            )}
-            {slot.status === "busy" && (
-              <span className="shrink-0 rounded-full bg-surface-soft px-2.5 py-1 text-[11px] font-semibold text-ink-faint">
-                Ocupada
               </span>
             )}
           </li>
@@ -187,17 +181,17 @@ function BoletosScreen() {
         <p className="text-xs text-ink-faint">Apto 302</p>
       </div>
 
-      <div className="mt-3 flex items-start justify-between gap-3 rounded-xl bg-surface-soft p-3">
-        <div>
+      <div className="mt-3 rounded-xl bg-surface-soft p-3">
+        <div className="flex items-center justify-between gap-2">
           <p className="text-xs text-ink-faint">Outubro</p>
-          <p className="mt-0.5 text-2xl font-semibold tabular-nums">
-            R$ 685,40
-          </p>
+          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand-1/10 px-2.5 py-1 text-[11px] font-semibold text-brand-2 tabular-nums">
+            <span className="size-1.5 rounded-full bg-brand-2" />
+            Vence 10/10
+          </span>
         </div>
-        <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand-1/10 px-2.5 py-1 text-[11px] font-semibold text-brand-2 tabular-nums">
-          <span className="size-1.5 rounded-full bg-brand-2" />
-          Vence 10/10
-        </span>
+        <p className="mt-1 whitespace-nowrap text-2xl font-semibold tabular-nums">
+          R$ 685,40
+        </p>
       </div>
 
       <div className="mt-3 flex items-center gap-2.5 rounded-xl border border-line px-3 py-2.5">
@@ -275,22 +269,14 @@ function EncomendasScreen() {
 
 const cards: Record<
   (typeof modules)[number]["id"],
-  { icon: typeof Wrench; screen: React.ReactNode; className?: string }
+  { icon: typeof Wrench; screen: React.ReactNode }
 > = {
-  reservas: {
-    icon: CalendarCheck,
-    screen: <ReservasScreen />,
-    className: "md:col-span-2",
-  },
+  reservas: { icon: CalendarCheck, screen: <ReservasScreen /> },
+  boletos: { icon: Barcode, screen: <BoletosScreen /> },
+  encomendas: { icon: Package, screen: <EncomendasScreen /> },
   comunicados: { icon: Megaphone, screen: <ComunicadosScreen /> },
   manutencoes: { icon: Wrench, screen: <ManutencoesScreen /> },
-  boletos: {
-    icon: Barcode,
-    screen: <BoletosScreen />,
-    className: "md:col-span-2",
-  },
   documentos: { icon: FileText, screen: <DocumentosScreen /> },
-  encomendas: { icon: Package, screen: <EncomendasScreen /> },
 };
 
 export default function Gestao() {
@@ -329,22 +315,19 @@ export default function Gestao() {
 
         <div className="mt-14 grid gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-3">
           {modules.map((module, index) => {
-            const { icon: Icon, screen, className = "" } = cards[module.id];
-            const wide = className !== "";
+            const { icon: Icon, screen } = cards[module.id];
 
             return (
               <Reveal
                 key={module.id}
                 delay={(index % 3) * 0.08}
-                className={`min-w-0 ${className}`}
+                className="min-w-0"
               >
                 <article
                   id={module.id}
-                  className={`flex h-full flex-col gap-7 rounded-3xl border border-white/10 bg-white/[0.04] p-6 transition-colors hover:border-white/20 hover:bg-white/[0.06] sm:p-8 ${
-                    wide ? "lg:flex-row lg:items-center lg:gap-10" : ""
-                  }`}
+                  className="flex h-full flex-col gap-7 rounded-3xl border border-white/10 bg-white/[0.04] p-6 transition-colors hover:border-white/20 hover:bg-white/[0.06] sm:p-8"
                 >
-                  <div className={wide ? "lg:flex-1" : undefined}>
+                  <div>
                     <span className="grid size-12 place-items-center rounded-2xl bg-brand-5/10 text-brand-5 ring-1 ring-inset ring-brand-5/25">
                       <Icon className="size-6" strokeWidth={1.75} />
                     </span>
@@ -356,27 +339,11 @@ export default function Gestao() {
                     </p>
                   </div>
 
-                  <div className={`mt-auto ${wide ? "lg:mt-0 lg:w-[22rem]" : ""}`}>
-                    {screen}
-                  </div>
+                  <div className="mt-auto">{screen}</div>
                 </article>
               </Reveal>
             );
           })}
-
-          <Reveal
-            delay={0.16}
-            className="min-w-0 md:col-span-2 lg:col-span-1"
-          >
-            <div className="flex h-full flex-col gap-2 rounded-3xl border border-dashed border-white/15 px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:gap-8 sm:px-8 lg:flex-col lg:items-start lg:justify-center lg:gap-3">
-              <p className="text-lg font-semibold text-white">
-                E outros módulos para a rotina do prédio.
-              </p>
-              <p className="text-white/60">
-                Esses são os mais usados. Na proposta, apresentamos todos.
-              </p>
-            </div>
-          </Reveal>
         </div>
       </div>
     </section>
