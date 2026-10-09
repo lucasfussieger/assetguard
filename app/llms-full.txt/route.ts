@@ -68,7 +68,7 @@ ${faq.map((item) => `### ${item.question}\n\n${item.answer}`).join("\n\n")}
 
 ## Contato e orçamento
 
-O orçamento é pedido pelo botão "Pedir orçamento", que abre um formulário com nome, WhatsApp, perfil (condomínio ou construtora) e se o prédio já usa software de gestão. A conversa continua pelo WhatsApp.
+O orçamento é pedido pelo botão "Pedir orçamento", que abre uma conversa no WhatsApp da Viz.
 
 - WhatsApp e telefone: ${CONTACT_PHONE}
 - Site: ${SITE_URL}/

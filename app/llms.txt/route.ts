@@ -47,7 +47,7 @@ ${features
 ## Contato
 
 - WhatsApp e telefone: ${CONTACT_PHONE}
-- Orçamento: botão "Pedir orçamento" em ${SITE_URL}/#contato; a conversa continua pelo WhatsApp.
+- Orçamento: botão "Pedir orçamento" em ${SITE_URL}/#contato, que abre o WhatsApp.
 `;
 
 export const dynamic = "force-static";

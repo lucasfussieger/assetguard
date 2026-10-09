@@ -34,6 +34,9 @@ export const SLOGAN = "Veja a água do seu prédio em tempo real.";
 
 export const CONTACT_PHONE = "+5547999346074";
 
+/** O mesmo número, como aparece na tela. */
+export const CONTACT_PHONE_DISPLAY = "(47) 99934-6074";
+
 export const KEYWORDS = [
   "smart living",
   "monitoramento de reservatórios",

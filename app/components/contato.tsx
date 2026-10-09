@@ -1,6 +1,7 @@
 import { WhatsappLogoIcon } from "@phosphor-icons/react/dist/ssr";
 import { ArrowRight } from "lucide-react";
 
+import { CONTACT_PHONE_DISPLAY } from "../lib/site";
 import { WHATSAPP_URL } from "../lib/whatsapp";
 import { QuoteButton } from "./quote-form";
 import Reveal from "./reveal";
@@ -47,10 +48,11 @@ export default function Contato() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-ghost border border-white/15 bg-white/5 px-8 py-4 text-base text-white hover:border-white/30 hover:bg-white/10"
+            aria-label={`WhatsApp ${CONTACT_PHONE_DISPLAY}`}
+            className="btn-ghost border border-white/15 bg-white/5 px-8 py-4 text-base text-white tabular-nums hover:border-white/30 hover:bg-white/10"
           >
             <WhatsappLogoIcon size={20} weight="fill" className="text-[#25d366]" />
-            Falar no WhatsApp
+            {CONTACT_PHONE_DISPLAY}
           </a>
         </div>
       </Reveal>

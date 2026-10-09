@@ -62,6 +62,15 @@ function buildMessage(form: FormState) {
   ].join("\n");
 }
 
+/** Por enquanto os botões abrem o WhatsApp direto. true volta a abrir o formulário. */
+const SHOW_FORM = false;
+
+const directMessage: Record<Tipo, string> = {
+  "": "Olá! Quero um orçamento da Viz para o meu prédio.",
+  condominio: "Olá! Quero um orçamento da Viz para o meu condomínio.",
+  construtora: "Olá! Quero um orçamento da Viz para a minha construtora.",
+};
+
 export function QuoteButton({
   children,
   className,
@@ -72,6 +81,19 @@ export function QuoteButton({
   tipo?: Tipo;
 }) {
   const { open } = useQuote();
+
+  if (!SHOW_FORM) {
+    return (
+      <a
+        href={whatsappLink(directMessage[tipo ?? ""])}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={className}
+      >
+        {children}
+      </a>
+    );
+  }
 
   return (
     <button
