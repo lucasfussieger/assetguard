@@ -18,10 +18,9 @@
   --surface-soft: #f2fafa;
   --line: rgba(0, 72, 83, 0.12);
 
-  /* Seções escuras: petróleo profundo, em vez de preto neutro */
+  /* Escuros: petróleo profundo (fundo do formulário) e o preto da hero e do rodapé */
   --deep: #001b21;
-  --deep-2: #002a32;
-  --abyss: #001216; /* rodapé: a água "funda" abaixo da onda */
+  --night: #010405; /* preto, com a cor vindo só das luzes */
 }
 
 @theme inline {
@@ -40,13 +39,12 @@
   --color-line: var(--line);
 
   --color-deep: var(--deep);
-  --color-deep-2: var(--deep-2);
-  --color-abyss: var(--abyss);
+  --color-night: var(--night);
 
   --color-background: var(--surface);
   --color-foreground: var(--ink);
 
-  --font-sans: var(--font-poppins);
+  --font-sans: var(--font-inter);
   --font-wordmark: var(--font-black-ops);
   --font-tagline: var(--font-inter);
 }
@@ -54,12 +52,14 @@
 html {
   /* Âncoras não ficam escondidas atrás do header fixo */
   scroll-padding-top: 5.5rem;
+  /* O que aparece ao puxar a página além do topo, colado na hero */
+  background: var(--night);
 }
 
 body {
   background: var(--surface);
   color: var(--ink);
-  font-family: var(--font-poppins), sans-serif;
+  font-family: var(--font-inter), sans-serif;
 }
 
 ::selection {
@@ -76,69 +76,76 @@ body {
   color: transparent;
 }
 
-/* Versão clara para fundos escuros */
-.text-gradient-light {
-  background: linear-gradient(120deg, var(--brand-5) 0%, #8ef0f1 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-
-.text-gradient-warm {
-  background: linear-gradient(120deg, var(--brand-1) 0%, var(--brand-2) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-
 /*
- * Luz que passa por dentro das letras. Uma faixa ciano desliza por cima em
- * modo "lighten": sobre o fundo claro nada muda, só as letras escuras
- * acendem. Anima só transform, no compositor; animar background-position
- * repintava o título a cada frame. Só funciona sobre fundo claro e fora de
- * um .reveal (a animação dele isola a mistura e a faixa apareceria).
+ * Luz que passa por dentro das letras dos títulos sobre preto (hero e
+ * chamada final). Uma faixa branca
+ * desliza por cima em "overlay": branco sobre preto continua preto e as
+ * letras ciano acendem. Onde o fundo não é preto puro ele clareia um pouco;
+ * a máscara apaga as bordas de cima e de baixo para isso virar um brilho
+ * macio, sem desenhar a caixa do texto. Anima só transform, no compositor;
+ * animar background-position repintava o título a cada frame. Fica fora de
+ * um .reveal (a animação dele isolaria a mistura e a faixa apareceria).
  */
-.text-shimmer-brand {
-  position: relative;
-  display: inline-block;
-  overflow: hidden;
-  /* folga para o overflow não cortar descendentes (o "p" de "tempo") */
-  padding: 0 0.04em 0.15em;
-  margin: 0 -0.04em -0.15em;
-  background: linear-gradient(100deg, var(--brand-4) 0%, var(--brand-3) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-
-.text-shimmer-brand::after {
-  content: "";
-  position: absolute;
-  /* começa abaixo do topo: não alcança os descendentes da linha de cima */
-  inset: 0.12em 0 0;
-  background: linear-gradient(
-    100deg,
-    transparent 30%,
-    var(--brand-5) 50%,
-    transparent 70%
-  );
-  mix-blend-mode: lighten;
-  pointer-events: none;
-  animation: text-shine 6s ease-in-out infinite;
-}
-
 @keyframes text-shine {
   0%        { transform: translateX(-100%); }
   55%, 100% { transform: translateX(100%); }
 }
 
-/* ---------- Botões ---------- */
+.text-shimmer-light {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  /* folga para o overflow não cortar descendentes (o "p" de "pontos") */
+  padding: 0 0.04em 0.15em;
+  margin: 0 -0.04em -0.15em;
+  background: linear-gradient(100deg, var(--brand-5) 0%, #8ef0f1 60%, var(--brand-5) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.text-shimmer-light::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.95) 50%,
+    transparent 70%
+  );
+  mix-blend-mode: overlay;
+  mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 70%, transparent);
+  pointer-events: none;
+  animation: text-shine 6s ease-in-out infinite;
+}
+
+/* ---------- Botões e títulos ---------- */
 /* Na camada components para que utilitários do Tailwind possam sobrescrever. */
 
 @layer components {
+  /* O mesmo tamanho de título na hero e em todas as seções */
+  .title-display {
+    font-size: 2.6rem;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  @media (min-width: 40rem) {
+    .title-display {
+      font-size: 3.75rem;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .title-display {
+      font-size: 4.25rem;
+    }
+  }
+
   .btn-primary {
     display: inline-flex;
     align-items: center;
@@ -183,38 +190,114 @@ body {
 
 /* ---------- Superfícies ---------- */
 
+/* Card das seções brancas: branco, borda fina e sombra neutra, sem cor */
 .card-soft {
-  background: linear-gradient(155deg, #ffffff 0%, var(--surface-soft) 100%);
-  border: 1px solid var(--line);
-  box-shadow: 0 1px 2px rgba(0, 72, 83, 0.04), 0 18px 40px -28px rgba(0, 72, 83, 0.35);
-}
-
-.panel {
   background: #ffffff;
   border: 1px solid var(--line);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 12px 32px -20px rgba(0, 0, 0, 0.14);
+}
+
+/*
+ * Painel do app sobre a hero. A borda é um degradê (ciano no alto, laranja
+ * no pé) pintado no border-box, com o fundo escuro por cima no padding-box.
+ */
+.panel-dark {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(160deg, #0a1b1f 0%, #050d0f 55%, #030809 100%) padding-box,
+    linear-gradient(
+        150deg,
+        color-mix(in srgb, var(--brand-5) 60%, transparent) 0%,
+        rgba(255, 255, 255, 0.08) 35%,
+        rgba(255, 255, 255, 0.04) 65%,
+        color-mix(in srgb, var(--brand-1) 45%, transparent) 100%
+      )
+      border-box;
   box-shadow:
-    0 1px 2px rgba(0, 72, 83, 0.05),
-    0 30px 60px -30px rgba(0, 72, 83, 0.35),
-    0 60px 120px -60px rgba(0, 185, 189, 0.35);
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 40px 80px -30px rgba(0, 0, 0, 0.9),
+    0 0 120px -40px color-mix(in srgb, var(--brand-5) 55%, transparent);
 }
 
-/* Malha sutil de fundo */
-.grid-faint {
-  background-image:
-    linear-gradient(to right, rgba(0, 72, 83, 0.055) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 72, 83, 0.055) 1px, transparent 1px);
-  background-size: 64px 64px;
+/*
+ * Luz em volta do card de funções da Solução: um aro ciano fino e dois halos
+ * de sombra colorida, sem filtro de blur (sombra é barata e não se mexe).
+ * Vem depois de .panel-dark para trocar a sombra dele.
+ */
+.panel-glow {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 0 1px color-mix(in srgb, var(--brand-5) 30%, transparent),
+    0 0 36px -4px color-mix(in srgb, var(--brand-5) 60%, transparent),
+    0 0 120px -10px color-mix(in srgb, var(--brand-5) 45%, transparent),
+    0 40px 80px -30px rgba(0, 0, 0, 0.55);
 }
 
-.grid-faint-dark {
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 64px 64px;
+/* ---------- Header de vidro líquido ---------- */
+
+/*
+ * Cápsula flutuante de vidro fosco branco e translúcido, sempre à vista no topo. O fosco é o
+ * desfoque do que passa por baixo; a borda (::before) é um aro de luz mais
+ * forte nas pontas, como vidro curvo refletindo; o brilho (::after) é o
+ * reflexo no alto à esquerda.
+ */
+.glass {
+  position: relative;
+  isolation: isolate;
+  background-color: rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.95),
+    0 0 0 1px rgba(0, 37, 44, 0.06),
+    0 2px 6px -2px rgba(0, 0, 0, 0.08),
+    0 18px 44px -18px rgba(0, 0, 0, 0.35);
 }
 
-.mask-fade-y {
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 100%);
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.18) 28%,
+    rgba(255, 255, 255, 0.04) 55%,
+    rgba(255, 255, 255, 0.55) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  /* depois do atalho "mask", que zera o composite */
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.glass::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  border-radius: inherit;
+  background:
+    radial-gradient(70% 140% at 18% -45%, rgba(255, 255, 255, 0.7), transparent 60%),
+    radial-gradient(45% 120% at 92% 145%, rgba(255, 255, 255, 0.22), transparent 65%);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* Grão de filme sobre a hero: tira o aspecto de "preto chapado" */
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  opacity: 0.05;
 }
 
 /* ---------- Animações ---------- */
@@ -295,6 +378,42 @@ body {
 
 .animate-signal {
   animation: signal-pulse 2.4s ease-out infinite;
+}
+
+/*
+ * Ondas que saem de trás do painel da hero, como o sinal dos sensores.
+ * Centradas por margem negativa: o transform fica livre para a animação.
+ */
+@keyframes ripple {
+  0%   { transform: scale(0.3); opacity: 0; }
+  20%  { opacity: 1; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+.ripple {
+  --ripple-size: 30rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--ripple-size);
+  height: var(--ripple-size);
+  margin: calc(var(--ripple-size) / -2) 0 0 calc(var(--ripple-size) / -2);
+  border-radius: 9999px;
+  border: 1px solid color-mix(in srgb, var(--brand-5) 35%, transparent);
+  animation: ripple 9s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+}
+
+@media (min-width: 40rem) {
+  .ripple {
+    --ripple-size: 46rem;
+  }
+}
+
+/* O painel central é largo: as ondas precisam passar das bordas dele */
+@media (min-width: 64rem) {
+  .ripple {
+    --ripple-size: 68rem;
+  }
 }
 
 /* Detalhes/FAQ: sinal de + vira × ao abrir */

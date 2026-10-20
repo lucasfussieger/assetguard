@@ -20,17 +20,17 @@ export const BRAND_NAME = "Viz";
 
 /** Até ~60 caracteres: o Google corta o resto. Palavra-chave antes da marca. */
 export const SITE_TITLE =
-  "Monitoramento de água e app para condomínios | Viz smart living";
+  "Gestão de condomínio e monitoramento de água | Viz";
 
 /** Até ~155 caracteres, pelo mesmo motivo. */
 export const SITE_DESCRIPTION =
-  "Sensores no reservatório e no hidrômetro avisam no celular antes de faltar água ou quando há vazamento. E o mesmo app cuida da gestão do condomínio.";
+  "Gestão do condomínio e monitoramento da água num app só. Alerta de vazamento e de caixa baixa no celular, com reservas, boletos e avisos.";
 
 /** Definição em uma frase, para JSON-LD e llms.txt. */
 export const SITE_SUMMARY =
-  "A Viz é uma empresa de smart living para condomínios. Mede o nível dos reservatórios e o consumo do hidrômetro em tempo real, avisa no celular quando algo sai do normal e, no mesmo app, cuida da gestão do condomínio: reservas, boletos, encomendas, comunicados, manutenções e documentos.";
+  "A Viz junta a gestão do condomínio e o monitoramento da água num app só. Sensores na caixa d'água e no hidrômetro avisam no celular quando algo sai do normal, e o mesmo app organiza reservas, boletos, encomendas, comunicados, manutenções e documentos.";
 
-export const SLOGAN = "Veja a água do seu prédio em tempo real.";
+export const SLOGAN = "Seu edifício integrado em todos os pontos.";
 
 export const CONTACT_PHONE = "+5547999346074";
 
@@ -38,6 +38,9 @@ export const CONTACT_PHONE = "+5547999346074";
 export const CONTACT_PHONE_DISPLAY = "(47) 99934-6074";
 
 export const KEYWORDS = [
+  "gestão de condomínio",
+  "monitoramento de água em condomínio",
+  "app de gestão de condomínio",
   "smart living",
   "monitoramento de reservatórios",
   "nível de caixa d'água",

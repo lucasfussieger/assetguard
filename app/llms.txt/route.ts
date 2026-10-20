@@ -1,4 +1,4 @@
-import { faq, features, joinPt, modules } from "../lib/content";
+import { faq, joinPt, modules, monitoring } from "../lib/content";
 import { CONTACT_PHONE, SITE_NAME, SITE_SUMMARY, SITE_URL } from "../lib/site";
 
 /*
@@ -9,7 +9,8 @@ import { CONTACT_PHONE, SITE_NAME, SITE_SUMMARY, SITE_URL } from "../lib/site";
 const answer = (question: string) =>
   faq.find((item) => item.question === question)?.answer ?? "";
 
-const moduleNames = joinPt(modules.map((item) => item.name.toLowerCase()));
+const names = (items: readonly { name: string }[]) =>
+  joinPt(items.map((item) => item.name.toLowerCase()));
 
 const content = `# ${SITE_NAME}
 
@@ -17,11 +18,11 @@ const content = `# ${SITE_NAME}
 
 Fatos principais:
 
-- O que é: monitoramento da água do prédio (${joinPt(
-  features.map((item) => item.name.toLowerCase())
-)}) com alertas no celular, somado a um app de gestão do condomínio.
-- Alertas: nível baixo, transbordo e consumo fora do padrão, como água correndo de madrugada.
-- Gestão do condomínio: ${moduleNames}.
+- O que é: gestão do condomínio e monitoramento da água no mesmo app.
+- Monitoramento da água: ${names(monitoring)}.
+- Gestão do condomínio: ${names(modules)}.
+- Alertas no celular: caixa baixa, transbordo e água correndo fora do normal, como de madrugada.
+- Quem usa: síndico, portaria e moradores.
 - Para quem: condomínios (síndicos e administradoras) e construtoras e incorporadoras.
 - Instalação: ${answer("Quem faz a instalação?")}
 - Preço: sob orçamento. ${answer("Quanto custa?")}
@@ -29,16 +30,11 @@ Fatos principais:
 
 ## Páginas
 
-- [Página inicial](${SITE_URL}/): proposta de valor para condomínios e construtoras.
-${features
-  .map(
-    (item) => `- [${item.name}](${SITE_URL}/#${item.id}): ${item.description}`
-  )
-  .join("\n")}
-- [Gestão do condomínio](${SITE_URL}/#gestao): ${moduleNames}, no mesmo app da água.
-- [Como funciona](${SITE_URL}/#como-funciona): do sensor ao alerta no celular, em três passos.
+- [Página inicial](${SITE_URL}/): gestão do condomínio e monitoramento da água num app só.
+- [Gestão e monitoramento](${SITE_URL}/#solucao): o que o app faz na água e na rotina do prédio.
+- [Como funciona](${SITE_URL}/#como-funciona): instalação, app para todo o prédio e aviso no celular, em três passos.
 - [Para quem](${SITE_URL}/#para-quem): benefícios para condomínios e para construtoras.
-- [Perguntas frequentes](${SITE_URL}/#duvidas): respostas diretas sobre instalação, alertas, boletos e preço.
+- [Perguntas frequentes](${SITE_URL}/#duvidas): respostas diretas sobre vazamentos, instalação, quem usa e preço.
 
 ## Para IAs
 

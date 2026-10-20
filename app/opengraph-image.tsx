@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const alt =
-  "Viz smart living: a água do prédio em tempo real e a gestão do condomínio no mesmo app";
+  "Viz smart living: gestão do condomínio e monitoramento da água no mesmo app";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -16,7 +16,7 @@ export default function Image() {
           alignItems: "center",
           justifyContent: "space-between",
           padding: "72px 88px",
-          background: "linear-gradient(135deg, #001b21 0%, #00333b 100%)",
+          background: "linear-gradient(135deg, #010405 0%, #002a32 100%)",
           color: "#ffffff",
         }}
       >
@@ -45,7 +45,7 @@ export default function Image() {
               letterSpacing: -2,
             }}
           >
-            Veja a água do seu prédio em tempo real.
+            Seu edifício integrado em todos os pontos.
           </div>
           <div
             style={{
@@ -54,8 +54,7 @@ export default function Image() {
               color: "rgba(255,255,255,0.7)",
             }}
           >
-            Reservatórios e hidrômetro monitorados, com a gestão do condomínio
-            no mesmo app.
+            Gestão do condomínio e monitoramento da água no mesmo app.
           </div>
         </div>
 

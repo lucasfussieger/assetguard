@@ -2,6 +2,8 @@
  * Textos compartilhados entre a página, o JSON-LD e o llms.txt, para que as
  * três versões digam sempre a mesma coisa. Ícones e visuais ficam nos
  * componentes, ligados pelo id.
+ *
+ * Tom: frase curta, palavra do dia a dia, a dor antes da função.
  */
 
 /** "a, b e c", para montar frases a partir das listas abaixo. */
@@ -11,110 +13,53 @@ export function joinPt(items: readonly string[]) {
     : items.join("");
 }
 
-/** O que o prédio enfrenta hoje. */
-export const problems = [
-  {
-    id: "conta",
-    title: "A conta vem alta e ninguém sabe por quê.",
-    text: "Um vazamento escondido corre dia e noite. Ele só aparece na fatura, um mês depois.",
+/** Os dois lados do app, como a página os apresenta. */
+export const pillars = {
+  monitoring: {
+    title: "Monitoramento da água",
+    pitch: "A água do prédio à vista, dia e noite.",
   },
-  {
-    id: "falta",
-    title: "A água acaba sem aviso.",
-    text: "A bomba para ou a boia trava. Quem avisa é o morador que ficou sem banho.",
+  modules: {
+    title: "Gestão do condomínio",
+    pitch: "A rotina do prédio fora do caderno e do WhatsApp.",
   },
-  {
-    id: "gestao",
-    title: "A gestão não enxerga a água.",
-    text: "Reservas, avisos e manutenções ficam de um lado. Reservatório e hidrômetro ficam do outro, sem ninguém olhando.",
-  },
+} as const;
+
+/** Monitoramento da água: só o nome de cada função, sem repetir. */
+export const monitoring = [
+  { id: "reservatorios", name: "Nível da caixa d'água" },
+  { id: "hidrometro", name: "Consumo hora a hora" },
+  { id: "vazamento", name: "Alerta de vazamento" },
+  { id: "nivel-baixo", name: "Alerta de caixa baixa" },
+  { id: "transbordo", name: "Alerta de transbordo" },
 ] as const;
 
-/** Monitoramento hídrico. */
-export const features = [
-  {
-    id: "reservatorios",
-    name: "Nível dos reservatórios",
-    description:
-      "Nível de cada reservatório em porcentagem e em litros, com alerta de nível baixo e de transbordo.",
-    title: "Saiba quanta água tem na caixa, sem subir na laje.",
-    text: "O app mostra o nível de cada reservatório em porcentagem e em litros, a qualquer hora.",
-    points: [
-      "Alerta de nível baixo, antes de a água acabar",
-      "Alerta de transbordo, quando a água escapa pelo ladrão",
-      "Histórico do nível ao longo do dia",
-    ],
-  },
-  {
-    id: "hidrometro",
-    name: "Leitura do hidrômetro",
-    description:
-      "Consumo do prédio hora a hora, com alerta quando a água corre fora do padrão, como de madrugada.",
-    title: "Veja o consumo hora a hora, não só no fim do mês.",
-    text: "A Viz lê o hidrômetro sozinha. Você acompanha quanto o prédio gasta por hora, por dia e por mês.",
-    points: [
-      "Alerta de consumo fora do padrão, como água correndo de madrugada",
-      "Comparação entre dias, semanas e meses",
-      "Fim da leitura manual e da anotação em planilha",
-    ],
-  },
-] as const;
-
-/** Gestão do dia a dia do condomínio: primeiro o que o morador usa, depois o síndico. */
+/** Gestão do dia a dia do condomínio, também só pelo nome. */
 export const modules = [
-  {
-    id: "reservas",
-    name: "Reservas",
-    description:
-      "O morador vê os horários livres e reserva o salão de festas ou a churrasqueira pelo app.",
-  },
-  {
-    id: "boletos",
-    name: "Boletos",
-    description:
-      "O morador abre o boleto do condomínio no app e copia o código de barras para pagar.",
-  },
-  {
-    id: "encomendas",
-    name: "Encomendas",
-    description:
-      "A portaria registra a encomenda e o morador recebe um aviso no celular.",
-  },
-  {
-    id: "comunicados",
-    name: "Comunicados",
-    description: "O síndico manda avisos para todos os moradores pelo app.",
-  },
-  {
-    id: "manutencoes",
-    name: "Manutenções",
-    description:
-      "O síndico registra as manutenções do prédio e acompanha o que está agendado e o que já foi feito.",
-  },
-  {
-    id: "documentos",
-    name: "Documentos",
-    description:
-      "Atas, regimento interno e contratos ficam guardados no app para consulta.",
-  },
+  { id: "reservas", name: "Reserva de áreas" },
+  { id: "boletos", name: "Boletos" },
+  { id: "encomendas", name: "Encomendas" },
+  { id: "comunicados", name: "Comunicados" },
+  { id: "manutencoes", name: "Manutenções" },
+  { id: "documentos", name: "Documentos" },
 ] as const;
 
-/** Do sensor ao celular. */
+/** Do começo ao dia a dia, em três passos. */
 export const steps = [
   {
     id: "instalacao",
-    title: "Instalamos os sensores",
-    text: "Nossa equipe coloca os sensores no reservatório e no hidrômetro e prepara o app para o condomínio.",
+    title: "A gente instala",
+    text: "Nossa equipe coloca os sensores e deixa o app pronto.",
   },
   {
-    id: "leitura",
-    title: "A leitura não para",
-    text: "As medições chegam ao app dia e noite, sem ninguém anotar nada.",
+    id: "app",
+    title: "Tudo no mesmo app",
+    text: "O síndico vê a água e a rotina do prédio na mesma tela.",
   },
   {
     id: "alerta",
-    title: "Você recebe o alerta",
-    text: "Se o nível cair ou o consumo sair do padrão, o aviso chega no celular e você age cedo.",
+    title: "Você fica sabendo na hora",
+    text: "Vazamento, caixa baixa ou encomenda: o aviso chega no celular.",
   },
 ] as const;
 
@@ -124,9 +69,9 @@ export const audiences = [
     title: "Condomínios",
     subtitle: "Síndicos e administradoras",
     points: [
-      "Vazamento percebido no mesmo dia, não na próxima conta",
+      "Vazamento visto no mesmo dia",
       "Aviso antes de faltar água",
-      "Gestão do dia a dia e água do prédio no mesmo app",
+      "Gestão e água num app só",
     ],
   },
   {
@@ -134,9 +79,9 @@ export const audiences = [
     title: "Construtoras",
     subtitle: "Construtoras e incorporadoras",
     points: [
-      "Um prédio smart living, diferencial concreto na venda",
-      "Histórico técnico que protege a construtora na garantia",
-      "Falhas percebidas cedo, antes de virarem obra corretiva",
+      "Diferencial na hora de vender",
+      "Registro técnico para a garantia",
+      "Falhas percebidas cedo",
     ],
   },
 ] as const;
@@ -145,46 +90,31 @@ export const faq = [
   {
     question: "O que a Viz faz?",
     answer:
-      "Monitora a água do prédio e cuida da gestão do condomínio no mesmo app. Os sensores medem o nível dos reservatórios e o consumo do hidrômetro. O app organiza reservas, boletos, encomendas, comunicados, manutenções e documentos.",
+      "Junta a gestão do condomínio e o monitoramento da água num app só. Você acompanha a caixa d'água e o hidrômetro e organiza reservas, boletos, encomendas e avisos no mesmo lugar.",
   },
   {
-    question: "Como a Viz ajuda a descobrir vazamentos?",
+    question: "Como a Viz ajuda a achar vazamentos?",
     answer:
-      "A Viz lê o hidrômetro sozinha e mostra o consumo do prédio hora a hora. Quando a água corre fora do padrão, como de madrugada, o alerta chega no celular no mesmo dia, e não na próxima conta.",
-  },
-  {
-    question: "Dá para saber o nível da caixa d'água sem subir na laje?",
-    answer:
-      "Sim. O sensor no reservatório envia o nível para o app, em porcentagem e em litros, a qualquer hora. Se o nível ficar baixo ou a água transbordar, você recebe um alerta.",
+      "Ela lê o hidrômetro e mostra o consumo hora a hora. Se a água correr fora do normal, como de madrugada, o alerta chega no celular no mesmo dia.",
   },
   {
     question: "Quem faz a instalação?",
     answer:
-      "A equipe da Viz instala os sensores e prepara o app para o condomínio. O prédio não precisa contratar ninguém à parte.",
-  },
-  {
-    question: "Como chegam os alertas?",
-    answer:
-      "No celular de quem cuida do prédio, assim que a leitura sai do normal. Não é preciso abrir o app para ficar sabendo.",
+      "A equipe da Viz instala os sensores e deixa o app pronto. O prédio não precisa contratar ninguém à parte.",
   },
   {
     question: "Quem usa o app?",
     answer:
-      "Síndico, portaria e moradores. O síndico acompanha a água e a rotina do prédio. O morador reserva áreas, lê os comunicados, acessa o boleto do condomínio e recebe o aviso de encomenda.",
-  },
-  {
-    question: "O boleto do condomínio fica no app?",
-    answer:
-      "Sim. O morador acessa o boleto pelo app e copia o código de barras para pagar, sem pedir a segunda via à administradora.",
+      "O síndico acompanha a água e a rotina do prédio. A portaria registra as encomendas. O morador reserva áreas, lê os avisos e acessa o boleto.",
   },
   {
     question: "Serve para prédios em construção?",
     answer:
-      "Sim. A construtora entrega o edifício com a Viz instalada e mantém o registro técnico durante a garantia.",
+      "Sim. A construtora entrega o prédio com a Viz instalada e guarda o registro técnico durante a garantia.",
   },
   {
     question: "Quanto custa?",
     answer:
-      "Depende do tamanho do condomínio e de quantos reservatórios e hidrômetros o prédio tem. Peça um orçamento e enviamos a proposta.",
+      "Depende do tamanho do prédio e de quantos reservatórios e hidrômetros ele tem. Peça um orçamento e mandamos a proposta.",
   },
 ] as const;

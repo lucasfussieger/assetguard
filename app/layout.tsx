@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Poppins, Inter, Black_Ops_One } from "next/font/google";
+import { Inter, Black_Ops_One } from "next/font/google";
 import "./globals.css";
 import Header from "./components/header";
 import { QuoteProvider } from "./components/quote-form";
@@ -12,17 +12,10 @@ import {
   SITE_URL,
 } from "./lib/site";
 
-const poppins = Poppins({
-  variable: "--font-poppins",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-});
-
-/** Só a linha "smart living" do logotipo usa Inter. */
+/** Fonte de toda a página. Variável: todos os pesos num arquivo só. */
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: "300",
 });
 
 const blackOpsOne = Black_Ops_One({
@@ -84,10 +77,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   colorScheme: "light",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#001b21" },
-  ],
+  // A página abre na hero preta: a barra do navegador acompanha.
+  themeColor: "#010405",
 };
 
 /*
@@ -104,8 +95,8 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${poppins.variable} ${inter.variable} ${blackOpsOne.variable} h-full antialiased scroll-smooth`}
-      style={{ fontFamily: "var(--font-poppins), sans-serif" }}
+      className={`${inter.variable} ${blackOpsOne.variable} h-full antialiased scroll-smooth`}
+      style={{ fontFamily: "var(--font-inter), sans-serif" }}
       suppressHydrationWarning
     >
       <head>

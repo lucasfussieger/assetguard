@@ -1,9 +1,9 @@
 import {
   audiences,
   faq,
-  features,
   joinPt,
   modules,
+  monitoring,
   steps,
 } from "./content";
 import {
@@ -44,7 +44,7 @@ export const structuredData = {
         "Leitura remota de hidrômetro",
         "Detecção de vazamentos em condomínios",
         "Gestão de condomínios",
-        "Smart living",
+        "Apps para condomínios",
       ],
       areaServed: {
         "@type": "Country",
@@ -88,19 +88,19 @@ export const structuredData = {
       applicationCategory: "BusinessApplication",
       applicationSubCategory: "Smart living para condomínios",
       operatingSystem: "Web",
-      description: `App que mostra o nível dos reservatórios e o consumo do hidrômetro do prédio em tempo real, com alertas no celular, e cuida da gestão do condomínio: ${joinPt(
+      description: `App que junta a gestão do condomínio e o monitoramento da água: nível da caixa e consumo do hidrômetro, com alertas no celular, e ${joinPt(
         modules.map((item) => item.name.toLowerCase())
       )}.`,
       publisher: { "@id": `${SITE_URL}/#organization` },
-      featureList: [...features, ...modules].map((item) => item.name),
+      featureList: [...monitoring, ...modules].map((item) => item.name),
     },
     {
       "@type": "Service",
       "@id": `${SITE_URL}/#service`,
-      name: "Monitoramento da água e gestão do condomínio",
+      name: "Gestão do condomínio e monitoramento da água",
       serviceType: "Smart living para condomínios",
       description:
-        "Instalação de sensores no reservatório e no hidrômetro, com leitura contínua e alerta quando o nível ou o consumo sai do normal, somada à gestão do condomínio no mesmo app.",
+        "Instalação de sensores na caixa d'água e no hidrômetro, com alerta no celular quando algo sai do normal, e o app de gestão do condomínio, tudo no mesmo lugar.",
       provider: { "@id": `${SITE_URL}/#organization` },
       areaServed: {
         "@type": "Country",
@@ -112,13 +112,12 @@ export const structuredData = {
       })),
       hasOfferCatalog: {
         "@type": "OfferCatalog",
-        name: "Monitoramento e gestão da Viz",
-        itemListElement: [...features, ...modules].map((item) => ({
+        name: "Gestão e monitoramento da Viz",
+        itemListElement: [...monitoring, ...modules].map((item) => ({
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
             name: item.name,
-            description: item.description,
           },
         })),
       },
@@ -126,9 +125,9 @@ export const structuredData = {
     {
       "@type": "HowTo",
       "@id": `${SITE_URL}/#como-funciona`,
-      name: "Como a Viz monitora a água do prédio",
+      name: "Como a Viz funciona no condomínio",
       description:
-        "Do sensor ao celular: instalação, leitura contínua e alerta quando algo sai do normal.",
+        "Instalação feita pela equipe Viz, um app para todo o prédio e aviso no celular quando algo sai do normal.",
       inLanguage: "pt-BR",
       step: steps.map((item, index) => ({
         "@type": "HowToStep",

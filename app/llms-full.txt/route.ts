@@ -1,9 +1,9 @@
 import {
   audiences,
   faq,
-  features,
   modules,
-  problems,
+  monitoring,
+  pillars,
   steps,
 } from "../lib/content";
 import { CONTACT_PHONE, SITE_NAME, SITE_SUMMARY, SITE_URL } from "../lib/site";
@@ -16,6 +16,9 @@ import { CONTACT_PHONE, SITE_NAME, SITE_SUMMARY, SITE_URL } from "../lib/site";
 const list = (items: readonly string[]) =>
   items.map((item) => `- ${item}.`).join("\n");
 
+const features = (items: readonly { name: string }[]) =>
+  items.map((item) => `- ${item.name}`).join("\n");
+
 const content = `# ${SITE_NAME}
 
 > ${SITE_SUMMARY}
@@ -24,28 +27,21 @@ Fonte: ${SITE_URL}/
 Idioma: português do Brasil
 Atualizado em: ${new Date().toISOString().slice(0, 10)}
 
-## O problema
+## Gestão e monitoramento, no mesmo app
 
-Hoje, o prédio descobre os problemas de água tarde demais.
+A água e a rotina do prédio num lugar só, para síndico, portaria e moradores.
 
-${problems.map((item) => `- ${item.title} ${item.text}`).join("\n")}
+### ${pillars.monitoring.title}
 
-## Monitoramento hídrico
+${pillars.monitoring.pitch}
 
-A Viz troca a surpresa pelo aviso. Sensores no reservatório e no hidrômetro enviam as leituras para o app. Quando algo sai do padrão, o responsável fica sabendo na hora.
+${features(monitoring)}
 
-${features
-  .map(
-    (item) =>
-      `### ${item.name}\n\n${item.title} ${item.text}\n\n${list(item.points)}`
-  )
-  .join("\n\n")}
+### ${pillars.modules.title}
 
-## Gestão do condomínio
+${pillars.modules.pitch}
 
-A água e a rotina do prédio ficam no mesmo app. Síndico, portaria e moradores resolvem pelo celular o que antes dependia de caderno, planilha e grupo de WhatsApp.
-
-${modules.map((item) => `### ${item.name}\n\n${item.description}`).join("\n\n")}
+${features(modules)}
 
 ## Como funciona
 
