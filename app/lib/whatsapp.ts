@@ -10,3 +10,13 @@ export function whatsappLink(message: string = DEFAULT_MESSAGE) {
 }
 
 export const WHATSAPP_URL = whatsappLink();
+
+/**
+ * Mensagem pronta de cada botão de orçamento, por perfil. A seção de
+ * orçamento mostra a geral na prévia do WhatsApp.
+ */
+export const QUOTE_MESSAGES = {
+  "": "Olá! Quero um orçamento da Viz para o meu prédio.",
+  condominio: "Olá! Quero um orçamento da Viz para o meu condomínio.",
+  construtora: "Olá! Quero um orçamento da Viz para a minha construtora.",
+} as const;

@@ -59,7 +59,7 @@ export default function Herosection() {
         </p>
 
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-          <QuoteButton className="btn-primary group px-7 py-4 text-base shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_18px_50px_-14px_rgba(246,55,0,0.75)]">
+          <QuoteButton className="btn-primary group px-7 py-4 text-base shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_18px_50px_-14px_rgba(0,185,189,0.6)]">
             Pedir orçamento
             <ArrowRight
               size={18}

@@ -18,7 +18,7 @@
   --surface-soft: #f2fafa;
   --line: rgba(0, 72, 83, 0.12);
 
-  /* Escuros: petróleo profundo (fundo do formulário) e o preto da hero e do rodapé */
+  /* Escuros: petróleo profundo (fundo do formulário) e o preto da hero */
   --deep: #001b21;
   --night: #010405; /* preto, com a cor vindo só das luzes */
 }
@@ -68,17 +68,8 @@ body {
 
 /* ---------- Gradientes de texto ---------- */
 
-.text-gradient-brand {
-  background: linear-gradient(120deg, var(--brand-4) 0%, var(--brand-5) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-
 /*
- * Luz que passa por dentro das letras dos títulos sobre preto (hero e
- * chamada final). Uma faixa branca
+ * Luz que passa por dentro das letras do título da hero. Uma faixa branca
  * desliza por cima em "overlay": branco sobre preto continua preto e as
  * letras ciano acendem. Onde o fundo não é preto puro ele clareia um pouco;
  * a máscara apaga as bordas de cima e de baixo para isso virar um brilho
@@ -146,28 +137,29 @@ body {
     }
   }
 
+  /* Botão principal: degradê verde da paleta (teal → ciano), cantos rounded-xl */
   .btn-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
     white-space: nowrap;
-    border-radius: 9999px;
-    background: linear-gradient(100deg, var(--brand-1) 0%, var(--brand-2) 100%);
+    border-radius: 0.75rem;
+    background: linear-gradient(100deg, var(--brand-4) 0%, var(--brand-5) 100%);
     color: #fff;
     font-weight: 600;
     box-shadow:
       0 1px 0 rgba(255, 255, 255, 0.25) inset,
-      0 10px 24px -12px color-mix(in srgb, var(--brand-2) 70%, transparent);
+      0 10px 24px -12px color-mix(in srgb, var(--brand-4) 70%, transparent);
     transition: filter 0.2s, transform 0.2s, box-shadow 0.2s;
   }
 
   .btn-primary:hover {
-    filter: brightness(1.08);
+    filter: brightness(1.06);
     transform: translateY(-1px);
     box-shadow:
       0 1px 0 rgba(255, 255, 255, 0.25) inset,
-      0 16px 32px -14px color-mix(in srgb, var(--brand-2) 80%, transparent);
+      0 16px 32px -14px color-mix(in srgb, var(--brand-4) 80%, transparent);
   }
 
   .btn-primary:focus-visible,
@@ -182,7 +174,7 @@ body {
     justify-content: center;
     gap: 0.5rem;
     white-space: nowrap;
-    border-radius: 9999px;
+    border-radius: 0.75rem;
     font-weight: 600;
     transition: background-color 0.2s, border-color 0.2s, color 0.2s;
   }
@@ -190,12 +182,12 @@ body {
 
 /* ---------- Superfícies ---------- */
 
-/* Card das seções brancas: branco, borda fina e sombra neutra, sem cor */
+/* Card das seções brancas: preto e branco, borda cinza fina, sem sombra */
 .card-soft {
   background: #ffffff;
-  border: 1px solid var(--line);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 12px 32px -20px rgba(0, 0, 0, 0.14);
+  border: 1px solid #e5e5e5;
 }
+
 
 /*
  * Painel do app sobre a hero. A borda é um degradê (ciano no alto, laranja
@@ -225,72 +217,21 @@ body {
  * Vem depois de .panel-dark para trocar a sombra dele.
  */
 .panel-glow {
+  /* sem aro: a borda em degradê do .panel-dark (verde → laranja) fica toda à vista */
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 0 0 1px color-mix(in srgb, var(--brand-5) 30%, transparent),
-    0 0 36px -4px color-mix(in srgb, var(--brand-5) 60%, transparent),
+    0 0 36px -4px color-mix(in srgb, var(--brand-5) 55%, transparent),
     0 0 120px -10px color-mix(in srgb, var(--brand-5) 45%, transparent),
     0 40px 80px -30px rgba(0, 0, 0, 0.55);
 }
 
-/* ---------- Header de vidro líquido ---------- */
+/* ---------- Header ---------- */
 
-/*
- * Cápsula flutuante de vidro fosco branco e translúcido, sempre à vista no topo. O fosco é o
- * desfoque do que passa por baixo; a borda (::before) é um aro de luz mais
- * forte nas pontas, como vidro curvo refletindo; o brilho (::after) é o
- * reflexo no alto à esquerda.
- */
-.glass {
-  position: relative;
-  isolation: isolate;
-  background-color: rgba(255, 255, 255, 0.6);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
-  box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.95),
-    0 0 0 1px rgba(0, 37, 44, 0.06),
-    0 2px 6px -2px rgba(0, 0, 0, 0.08),
-    0 18px 44px -18px rgba(0, 0, 0, 0.35);
-}
-
-.glass::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  padding: 1px;
-  border-radius: inherit;
-  background: linear-gradient(
-    115deg,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(255, 255, 255, 0.18) 28%,
-    rgba(255, 255, 255, 0.04) 55%,
-    rgba(255, 255, 255, 0.55) 100%
-  );
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  /* depois do atalho "mask", que zera o composite */
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-.glass::after {
-  content: "";
-  position: absolute;
-  inset: 1px;
-  z-index: -1;
-  border-radius: inherit;
-  background:
-    radial-gradient(70% 140% at 18% -45%, rgba(255, 255, 255, 0.7), transparent 60%),
-    radial-gradient(45% 120% at 92% 145%, rgba(255, 255, 255, 0.22), transparent 65%);
-  opacity: 0.8;
-  pointer-events: none;
+/* Cápsula branca fixa no topo, com borda cinza de 2px e uma sombra leve */
+.header-capsule {
+  background-color: #ffffff;
+  border: 2px solid #e5e5e5;
+  box-shadow: 0 10px 30px -16px rgba(0, 0, 0, 0.18);
 }
 
 /* Grão de filme sobre a hero: tira o aspecto de "preto chapado" */
@@ -369,6 +310,16 @@ body {
   animation: wave 7s linear infinite;
 }
 
+/* Cursor piscando na prévia do WhatsApp (a mensagem já está na caixa de texto) */
+@keyframes caret-blink {
+  0%, 49%   { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.animate-caret {
+  animation: caret-blink 1.1s steps(1) infinite;
+}
+
 /* Pulso do sinal "ao vivo" */
 @keyframes signal-pulse {
   0%   { transform: scale(0.6); opacity: 0.6; }
@@ -423,6 +374,26 @@ details > summary {
 
 details > summary::-webkit-details-marker {
   display: none;
+}
+
+/*
+ * A resposta do FAQ desliza ao abrir e fechar. interpolate-size deixa animar
+ * até height: auto; em navegador sem ::details-content ela só aparece.
+ */
+:root {
+  interpolate-size: allow-keywords;
+}
+
+.faq::details-content {
+  height: 0;
+  overflow: clip;
+  transition:
+    height 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    content-visibility 0.35s allow-discrete;
+}
+
+.faq[open]::details-content {
+  height: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {

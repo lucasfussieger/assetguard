@@ -11,17 +11,17 @@ export const navLinks = [
   { href: "#duvidas", label: "Dúvidas" },
 ];
 
-/* Cápsula de vidro fosco branco, fixa no topo, sempre com a marca. */
+/* Cápsula branca fixa no topo, sempre com a marca. Texto todo preto; só o botão é verde. */
 export default function Header() {
   return (
     <header className="pointer-events-none fixed inset-x-0 top-3 z-50 px-3 sm:top-4 sm:px-6">
-      <div className="glass pointer-events-auto mx-auto flex max-w-5xl items-center justify-between gap-4 rounded-full p-2 pl-5 sm:pl-6">
+      <div className="header-capsule pointer-events-auto mx-auto flex max-w-5xl items-center justify-between gap-4 rounded-full p-2 pl-5 sm:pl-6">
         <Link
           href="/"
           aria-label="Viz smart living, página inicial"
           className="rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-5"
         >
-          <Wordmark />
+          <Wordmark tone="mono" />
         </Link>
 
         <nav aria-label="Principal" className="hidden lg:block">
@@ -30,7 +30,7 @@ export default function Header() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="block rounded-full px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-ink/[0.06] focus-visible:outline-2 focus-visible:outline-brand-5"
+                  className="block rounded-full px-4 py-2 text-sm font-medium text-neutral-950 transition-colors hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-brand-5"
                 >
                   {link.label}
                 </a>
@@ -39,7 +39,8 @@ export default function Header() {
           </ul>
         </nav>
 
-        <QuoteButton className="btn-primary px-5 py-2.5 text-sm">
+        {/* Só aqui o botão é pílula, para acompanhar a cápsula do header */}
+        <QuoteButton className="btn-primary rounded-full px-5 py-2.5 text-sm">
           Pedir orçamento
         </QuoteButton>
       </div>

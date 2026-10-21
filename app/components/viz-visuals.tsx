@@ -227,14 +227,14 @@ export function DashboardPreview() {
         {routine.map(({ icon: Icon, name, status }) => (
           <div
             key={name}
-            className="flex items-center gap-3 rounded-2xl bg-white/[0.03] p-3 ring-1 ring-inset ring-white/[0.08] sm:p-4"
+            className="flex flex-col items-start gap-2 rounded-2xl bg-white/[0.03] p-3 ring-1 ring-inset ring-white/[0.08] sm:flex-row sm:items-center sm:gap-3 sm:p-4"
           >
             <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-brand-5/10 text-brand-5 ring-1 ring-inset ring-brand-5/20">
               <Icon className="size-[18px]" strokeWidth={2} />
             </span>
             <div className="min-w-0">
               <p className="text-xs text-white/45">{name}</p>
-              <p className="truncate text-sm font-semibold text-white">
+              <p className="text-sm font-semibold text-white sm:truncate">
                 {status}
               </p>
             </div>

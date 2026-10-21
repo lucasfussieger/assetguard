@@ -9,7 +9,7 @@ import {
 } from "react";
 import { ArrowRight, Check, X } from "lucide-react";
 
-import { whatsappLink } from "../lib/whatsapp";
+import { QUOTE_MESSAGES, whatsappLink } from "../lib/whatsapp";
 
 type Tipo = "" | "condominio" | "construtora";
 
@@ -65,11 +65,7 @@ function buildMessage(form: FormState) {
 /** Por enquanto os botões abrem o WhatsApp direto. true volta a abrir o formulário. */
 const SHOW_FORM = false;
 
-const directMessage: Record<Tipo, string> = {
-  "": "Olá! Quero um orçamento da Viz para o meu prédio.",
-  condominio: "Olá! Quero um orçamento da Viz para o meu condomínio.",
-  construtora: "Olá! Quero um orçamento da Viz para a minha construtora.",
-};
+const directMessage: Record<Tipo, string> = QUOTE_MESSAGES;
 
 export function QuoteButton({
   children,
