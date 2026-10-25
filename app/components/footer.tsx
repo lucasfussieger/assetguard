@@ -1,5 +1,6 @@
 import { CONTACT_PHONE_DISPLAY } from "../lib/site";
 import { WHATSAPP_URL } from "../lib/whatsapp";
+import { PreferenciasDeCookies } from "./cookies";
 import { navLinks } from "./header";
 import { QuoteButton } from "./quote-form";
 import Wordmark from "./wordmark";
@@ -53,7 +54,10 @@ export default function Footer() {
             © {new Date().getFullYear()} Viz smart living. Todos os direitos
             reservados.
           </p>
-          <p className="tabular-nums">{CONTACT_PHONE_DISPLAY}</p>
+          <p className="flex gap-4">
+            <PreferenciasDeCookies className="transition-colors hover:text-neutral-950" />
+            <span className="tabular-nums">{CONTACT_PHONE_DISPLAY}</span>
+          </p>
         </div>
       </div>
     </footer>

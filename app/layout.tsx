@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Black_Ops_One } from "next/font/google";
 import "./globals.css";
-import Header from "./components/header";
+import Cookies from "./components/cookies";
 import { QuoteProvider } from "./components/quote-form";
+import Rastreador from "./components/rastreador";
 import { structuredData } from "./lib/structured-data";
 import {
   KEYWORDS,
@@ -109,10 +110,9 @@ export default function RootLayout({
             __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
           }}
         />
-        <QuoteProvider>
-          <Header />
-          {children}
-        </QuoteProvider>
+        <QuoteProvider>{children}</QuoteProvider>
+        <Rastreador />
+        <Cookies />
       </body>
     </html>
   );

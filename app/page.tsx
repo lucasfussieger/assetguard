@@ -1,3 +1,4 @@
+import Header from "./components/header";
 import Herosection from "./components/Herosection";
 import Solucao from "./components/solucao";
 import ComoFunciona from "./components/como-funciona";
@@ -9,6 +10,8 @@ import Footer from "./components/footer";
 export default function Home() {
   return (
     <>
+      <Header />
+
       <main>
         <Herosection />
         <Solucao />

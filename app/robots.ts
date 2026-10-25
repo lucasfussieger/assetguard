@@ -26,16 +26,21 @@ const AI_CRAWLERS = [
   "CCBot",
 ];
 
+/** Painel interno e coletor de visitas: fora de qualquer busca. */
+const PRIVATE_PATHS = ["/metricas", "/api/"];
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
         userAgent: "*",
         allow: "/",
+        disallow: PRIVATE_PATHS,
       },
       {
         userAgent: AI_CRAWLERS,
         allow: "/",
+        disallow: PRIVATE_PATHS,
       },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
