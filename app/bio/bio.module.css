@@ -1,0 +1,131 @@
+/*
+ * Movimento da página de links. Tudo CSS, no carregamento: os blocos sobem um
+ * depois do outro (--i é a ordem de cada um), o sinal pulsa em volta da marca
+ * e o botão do WhatsApp chama atenção com um aro e um reflexo. Só transform e
+ * opacity, no compositor. Com "reduzir movimento", a regra do globals.css
+ * zera as animações e tudo fica no estado de repouso, visível.
+ */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+.enter {
+  animation: rise 0.8s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1))
+    calc(0.1s + var(--i, 0) * 0.08s) backwards;
+}
+
+/*
+ * O reflexo do slogan (.text-shimmer-light) espera o título subir: durante a
+ * entrada, a opacidade isola a mistura e a faixa branca apareceria.
+ */
+.title .shine::after {
+  animation-delay: 1.4s;
+  animation-fill-mode: backwards;
+}
+
+/* Ondas de sinal saindo da marca, como as do painel na hero */
+@keyframes signal {
+  from {
+    opacity: 0.6;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+}
+
+.signal {
+  position: absolute;
+  inset: 0;
+  border-radius: 1.5rem;
+  border: 1px solid color-mix(in srgb, var(--brand-5) 55%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  animation: signal 3.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+/* Botão do WhatsApp: o degradê do .btn-primary, maior */
+.zap {
+  background: linear-gradient(110deg, var(--brand-4) 0%, var(--brand-5) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 24px 60px -18px color-mix(in srgb, var(--brand-5) 75%, transparent);
+}
+
+/* Aro que se abre em volta do botão. Escala mais na altura para a folga ficar igual dos quatro lados. */
+@keyframes halo {
+  from {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.05, 1.22);
+  }
+}
+
+.zap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid color-mix(in srgb, var(--brand-5) 70%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  animation: halo 2.4s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)) 1.2s infinite;
+}
+
+/* Reflexo que atravessa o botão de tempos em tempos */
+@keyframes sheen {
+  from {
+    transform: translateX(-120%) skewX(-18deg);
+  }
+  35%,
+  to {
+    transform: translateX(320%) skewX(-18deg);
+  }
+}
+
+.sheen {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.sheen::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 45%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+  transform: translateX(-120%) skewX(-18deg);
+  animation: sheen 4.5s var(--ease-in-out, cubic-bezier(0.65, 0, 0.35, 1)) 1.6s
+    infinite;
+}
+
+/* O ícone 3D do WhatsApp balança de leve */
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(3deg);
+  }
+}
+
+.bob {
+  animation: bob 3.2s ease-in-out infinite;
+}

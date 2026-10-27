@@ -60,6 +60,7 @@ const LUGARES: Record<string, string> = {
   duvidas: "Dúvidas",
   contato: "Contato",
   footer: "Rodapé",
+  bio: "Página /bio",
 };
 
 function duracao(segundos: number | null) {
