@@ -10,7 +10,7 @@ import {
   Droplets,
 } from "lucide-react";
 
-import { CONTACT_PHONE_DISPLAY, SITE_NAME } from "../lib/site";
+import { SITE_NAME } from "../lib/site";
 import { QUOTE_MESSAGES, whatsappLink } from "../lib/whatsapp";
 import styles from "./bio.module.css";
 
@@ -191,9 +191,7 @@ export default function Bio() {
           className={`${styles.enter} mt-auto pt-12 text-xs text-white/40`}
           style={ordem(7)}
         >
-          <span className="tabular-nums">{CONTACT_PHONE_DISPLAY}</span>
-          <span aria-hidden="true"> · </span>© {new Date().getFullYear()}{" "}
-          {SITE_NAME}
+          © {new Date().getFullYear()} {SITE_NAME}
         </p>
       </div>
     </main>
